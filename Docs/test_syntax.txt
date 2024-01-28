@@ -1,0 +1,19 @@
+cmd
+cmd r
+cmd r
+
+voici mes elements
+cmd, r1, r2, r3, r4, p, et a
+
+
+
+
+
+
+
+
+echo > file_1 | wc -c > file_2
+echo > file_1 | wc -c > file_2
+echo > file_1 | wc -c > file_2
+echo > file_1 | wc -c > file_2
+echo > file_1 | wc -c > file_2

@@ -1,0 +1,13 @@
+
+
+// heredoc
+
+on check tous les tokens (utiliser un iterateur de fonction)
+    on regarde si token_type est un heredoc,
+        si c'est le cas, on le traite en recuperant le delimiteur
+
+on ne stock pas tout pour faire ensuite (implique une liste ou une structure specialement pour 
+les heredoc ce qui n'est pas obliger)
+
+des qu'on en a un on le gere immediatement
+=> on doit avoir un attribut dans node: heredoc_file

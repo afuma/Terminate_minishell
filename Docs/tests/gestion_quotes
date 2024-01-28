@@ -1,0 +1,65 @@
+
+reprendre tous les tests ci-dessous et les mettre dans le tester
+
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ echo 'bonjour' -> 2 token, remove quotes M2 ok
+bonjour
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ echo 'bonjour''' -> 2 token, remove quotes M2 ok
+bonjour
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ echo 'bonjour''bj' -> 3 tokens, remove quotes, strcat M2 ok
+bonjourbj
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ echo 'bonjour''''bj' -> 3 tokens, remove quotes, strcat M2 ok
+bonjourbj
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ echo 'bonjour''""bj' -> 3 tokens, remove quotes, strcat M2 ok
+bonjour""bj
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ echo "bonjour''""bj" -> 3 tokens, remove quotes, strcat M2 ok
+bonjour''bj
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ echo "bonjour'/'""bj" -> 3 tokens, remove quotes, strcat M2 ok
+bonjour'/'bj
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ echo "bonjour'\'""bj" -> 3 tokens, remove quotes, strcat M2 ok
+bonjour'\'bj
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ echo "bonjour''" "bj" -> 3 tokens, remove quotes, strcat M2 ok
+bonjour'' bj
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ echo "bonjour''""""bj" -> 3 tokens, remove quotes, strcat M2 ok
+bonjour''bj
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ echo "bonjour''"""''"bj" -> 3 tokens, remove quotes, strcat M2 ok
+bonjour''bj
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ echo "bonjour''"""'ici'"bj" -> 4 tokens, remove quotes, strcat M2 ok
+bonjour''icibj
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ echo " bonjour''"""'ici'"bj" -> 4 tokens, remove quotes, strcat M2 ok
+ bonjour''icibj
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ echo " bonjour''"""'ici'"bj"" " -> 4 tokens, remove quotes, strcat M2 ok
+ bonjour''icibj 
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ echo" b" -> 2 tokens, remove quotes, strcat M2 ok
+echo b: command not found
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ echo""" b" -> 3 tokens, remove quotes, strcat M2 ok
+echo b: command not found
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ echo" "" b"
+echo  b: command not found
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ echo"""'' b"
+echo'' b: command not found
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ echo'''"" b'
+echo"" b: command not found
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ echo '''"" b'
+"" b
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ ''echo '''"" b'
+"" b
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ ''""echo '''"" b'
+"" b
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ ''"e"cho '''"" b'
+"" b
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ ''" e "cho '''"" b'
+ e cho: command not found
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ ''" e """cho '''"" b'
+ e cho: command not found
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ ''" e ""d"cho '''"" b'
+
+ e dcho: command not found
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ 
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ ''" e """"d"cho '''"" b'
+ e dcho: command not found
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ ''" e ''""""d"cho '''"" b'
+ e ''dcho: command not found
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ echo" b"
+echo b: command not found
+edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ 
+

@@ -1,0 +1,157 @@
+
+
+
+--------------------------------------------------------------------------
+pote a boris (enfant)
+test pour la commande cd, si on creer un fichier dans un dossier
+    puis que l'on supprime le dossier
+    => de mettre a jour la variable path (celle duplique pour nos besoins)
+test pour la commande cd, si on fait: unset HOME (doit supprimer la variable HOME de notre path)
+    => gerer ce cas ou la variable HOME n'existe plus
+test pour les pipes (petit programme pour taper automatiquement "echo bonjour" 2000 fois),
+    et si on creer plus de 1024 fd, le programme segfault
+=> de faire fd[IN] et fd[OUT] pour gerer le multipipe
+
+--------------------------------------------------------------------------
+
+/* 
+echo > file.txt 'bonjour' > file_2.txt | wc -c
+
+liste1 :
+
+elem1 = echo 'bonjour'                          elem2 = wc -c
+    sousliste1:
+        elem1 = > file.txt elem2 = > file2.txt
+ */
+
+// liste chainee (maillons), pas de tokenisation, pas de pipe
+// on parcours la commande comme elle vient et on construit a partir de la
+
+// exemple: echo 'bonjour' > file.txt
+// liste chainee data, attribut char **tab_exec premiere element sera 'echo'
+// second element sera 'bonjour'
+
+// pas lexer, faire directement le parsing et remplir tab_exec
+
+----------------------------------------------------
+/* -> logique syntqx error :
+-> si token rencontre (|, < ou >), on regarde avant si il y a du "texte",
+apres si il ya du "texte" entre le token et la fin de la string ou le next token
+-> si apres < il y a < ou apres > il y a > c bon mais pas de <> ou >< */
+----------------------------------------------------
+
+faire un substr
+exemple: echo 'bonjour'
+
+data->start = i (0 ici)
+faire une boucle pour parcourir str jusqu'a trouver un caractere de syntax (espace, quote, pipe, redirections)
+une fois parcourus, definir data->end a cette emplacement
+faire un substr(data->str, data->start, data->end)
+le mettre dans tab_exec puis iterer
+
+    ensuite, definir les choses a faire en fonction du caractere trouver,
+    par exemple si on a une redirection, alors node->redirect.type = (letter)
+        pour la "letter", faire une fonction avec des enums (reprendre enum d'avant)
+            pour quand apres on fait les heredoc comptabilise le bon nombre etc.. pour les gerer avant l'execution
+
+    si on a un pipe, alors on passe au node suivant (on creer un nouveau node vide) que l'on va remplir par la sousliste1
+
+
+-------------------------------------------------------------------------------------------------
+
+
+ETAPE 1: OK
+    delimiter la chaine avec un start et un end pour parser avant le pipe prochain
+        ce qui nous permet de travailler sur un maillons a la fois
+        utiliser la structure data pour cela (data->start, data->end)
+ETAPE 2:
+Objectif: on a besoin de faire un malloc du tableau 
+
+donc on separe en tokens comme mon code de base
+on auras ca: data->tokens qui contiendras une liste de tokens
+a partir de cette liste de tokens qui auras un attribut type (les differents types de redirection, pipe etc.)
+apres on compt le nombre d'arguments puis on malloc tout
+
+ETAPE 3:
+faire des fonctions pour compter, par exemple pour definir le nombre d'option ou d'arguments necessaire pour le malloc de tab_exec
+
+ETAPE 4:
+implementer unclosed quotes
+
+ETAPE 5:
+je pense qu'il va falloir rearranger les tokens en fonction des filtres (en gros les fusionner pour des cas
+particulier de quotes) car le lexer est une certaine implementation de base qui a ces propres defaults.
+Et ce serais beaucoup plus simple pour la suite, on aurais des tokens propres que l'on peut directement utiliser
+dans tab_exec
+
+
+-------------------------------------------------------------------------------------------------
+
+EXPLICATION HELIA:
+soit je fais un lexer globale, puis je compte le nombre de pipe  pqrce au'il seras
+
+echo -n      "bonjour" > test1 | wc -l| rev
+je coupe une premiere fois aux pipes
+et je recoupe entre les pipes en fonction des espaces (tout type d'espace (entre 9 et 13 et 32 sur table ascii)),
+des redirs et des guillemets
+je compte + 1 si espace et guillemet, je me deplace juste si c un redir
+attention 
+echo -n "bjr" >test1 |wc -l| rev
+doit fonctionner tt pareil, mais si t te base que sur les epaces pr compter tu aura pas le bon compte
+
+
+-------------------------------------------------------------------------------------------------
+
+
+IDEE:
+pour travailler avec un maillon c'est beaucoup plus simple maintenant.
+
+Ce qu'on a: une liste de tokens
+Ce que l'on va avoir: a partir de la, on fait le parsing, c'est a dire trouve le type_token (pipe, le type de redirection etc.)
+de plus on a la position de chaque element dans l'ordre de la commande.
+Ainsi, pour travailler dans un maillon, qui doit etre delimiter par un pipe, alors on a juste a parcourir
+et a trouver le token de type_token pipe. on enregistre la position du pipe courant dans la structure principale data.
+quelque chose du style: node_pipe_left = 0 et node_pipe_right = 7. on sait donc que l'on va manipuler les tokens
+ayant un id compris entre 0 et 7. puis on passeras a un autre maillon, donc on modifieras les valeurs de proche en proche
+vers la droite.
+
+
+-------------------------------------------------------------------------------------------------
+
+
+PATTERN 1:
+Dans bash (ne retourne pas d'erreur): echo 'bonjour' >''file.txt|wc -c
+0
+Dans bash (retourne une erreur): echo 'bonjour' >'' file.txt|wc -c
+bash: : No such file or directory
+0
+un pattern est un filtre.
+=> pattern d'erreur 1:
+    - si type_token == redir (tous type de redir je suppose) (pas le heredoc qui considere qu'un double quote
+    correspond a un caractere null est donc que cliquez sur la touche entrer correspond au delimiter)
+    et que son attribut rstick est "S_QUOTE"
+    et que l'attribut lstick du token suivant est "S_SPACE"
+alors on retourne une erreur
+
+
+-------------------------------------------------------------------------------------------------
+
+
+PATTERN 2:
+prends ce cas la aussi en compte: echo 'bonjour'|wc -'c''l' (on a 3 tokens qu'il faut reunir)
+
+Dans bash (ne retourne pas d'erreur): echo 'bonjour'|wc -''''c
+mon implementation actuelle creer 2 tokens (- et c) ce qui ne va pas du tout
+donc:
+    - soit on creer une fonction pour en fonction du pattern refusionner les tokens, en ayant a l'id puis les fusionner
+    - soit grace au pattern on copie colle directement le tiret avec le caractere d'option dans tab_exec
+
+Dans bash (retourne une erreur): echo 'bonjour'|wc -'''' c
+- si type_token == option
+    et que son attribut rstick est "S_QUOTE"
+    et que l'attribut lstick du token suivant est "S_SPACE"
+alors on retourne une erreur
+- si type_token == option
+    et que son attribut rstick est "S_QUOTE"
+    et que l'attribut lstick du token suivant est "S_QUOTE" et que is_space est egale a true
+alors on retourne une erreur

@@ -1,0 +1,8 @@
+
+logique execution des process des commandes
+si une seule commande (un node),
+ si ce n'est pas un builtin, alors on execute un process enfant
+ si builtin dans le process parent
+si plusieurs commandes (plusieurs nodes)
+ tout est executer dans les processus enfant
+--------------------------------------------------------------------------

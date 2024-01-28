@@ -1,0 +1,38 @@
+
+- gestion des signaux
+    - exit ctrl + D segfault si aucune commande n''as ete rentrer auparavant
+    - voir gestion des signaux dans le heredoc
+    - ctrl + \ segfault
+- vérifier les leaks (bien tout free)
+- Mettre en place le tester
+- voir le parsing pour la redirection d'erreur: 2>
+- implementer la redirection d'erreur
+
+Etienne ET Will
+
+- Voir Olivier pour execution (on ne verifie pas les fichiers avant dans le parsing)
+mais apres les forks, dans l'exec
+
+
+creer un attribut pour le delimit_node dans token
+comme ca on definit si on est dans un node en fonction de l'id_node de token
+par exemple:
+tmp_id_node = token->id_node;
+while token->id_node == tmp_id_node
+alors on process
+sinon
+on passe a autre chose
+
+open
+unlink
+close
+=> quand close, alors le fichier disparait
+
+voir la fonction signal (voir code Robin)
+signal(SIGQUIT, SIG_IGN);
+
+- Reinitialiser data si besoin (HEAP/STACK)
+- Gerer les cas particulier de gerer_expand.txt
+- implementer caracteres speciaux + builtin => erreur
+    par exemple: "cd [*]" ou "export !"
+    ce sont des cas non gerer par les builtins

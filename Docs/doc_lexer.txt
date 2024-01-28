@@ -1,0 +1,75 @@
+# Documentation du fichier lexer.c
+
+## Vue d'ensemble
+Le fichier lexer.c fait partie d'un interpréteur de commandes shell personnalisé, souvent appelé minishell. Ce fichier contient les fonctions nécessaires pour analyser une chaîne de caractères (la commande entrée par l'utilisateur) et la diviser en une série de tokens. Chaque token représente un élément syntaxique de la commande, comme un mot ou un opérateur.
+
+## Structures de données
+- t_token: Représente un token individuel avec plusieurs champs pour stocker des informations telles que l'identifiant du token, le type, la chaîne de caractères correspondante, et des pointeurs pour créer une liste chaînée de tokens.
+- t_data: Contient les données nécessaires pour le processus de lexing, y compris la chaîne de caractères d'entrée, un pointeur vers le premier token, et des variables pour suivre l'état actuel du lexing.
+
+## Fonctions principales
+
+### t_token *create_token(t_data *data, int end)
+Crée un nouveau token en allouant de la mémoire et en initialisant ses champs avec les données extraites de la chaîne de caractères d'entrée. La fonction calcule la longueur du token et utilise ft_substr pour copier la chaîne correspondante.
+
+### void add_token(t_data *data, int end)
+Ajoute un nouveau token à la liste chaînée de tokens dans data. Si la liste est vide, le nouveau token devient le premier élément; sinon, il est ajouté à la fin de la liste.
+
+### t_stick_token ft_type_char(char c)
+Détermine le type de caractère (par exemple, guillemet simple, guillemet double, espace, caractère nul, ou caractère standard) pour le lexer, ce qui est essentiel pour comprendre la signification de chaque caractère dans la commande.
+
+### bool is_quote(char c)
+Vérifie si le caractère donné est un guillemet simple ou double, ce qui est important pour traiter correctement les chaînes de caractères dans la commande.
+
+### bool is_space(char c)
+Vérifie si le caractère donné est un espace ou une tabulation, ce qui aide à séparer les tokens dans la commande.
+
+### int process_quote(t_data *data, int *i)
+Traite une séquence de guillemets dans la chaîne de caractères de data, en avançant l'indice i et en déterminant si les guillemets sont fermés correctement.
+
+### bool process_space(t_data *data, int *i)
+Avance l'indice i jusqu'à ce qu'un espace ou un guillemet soit trouvé, ce qui permet de séparer les tokens basés sur les espaces.
+
+### void init_data(t_data *data, char *str)
+Initialise la structure data avec la chaîne de caractères donnée, préparant le terrain pour le processus de lexing.
+
+### void skip_spaces(t_data *data, int *i)
+Avance l'indice i pour ignorer les espaces dans la chaîne de caractères, ce qui est utile pour trouver le début du prochain token.
+
+### void ft_lexer(t_data *data, char *str)
+Analyse la chaîne de caractères str et remplit data avec les tokens générés. Cette fonction est le cœur du lexer, orchestrant le processus de lexing en utilisant les autres fonctions.
+
+## Fonctions auxiliaires
+
+### void print_tokens(t_token *tokens)
+Affiche le contenu de tous les tokens pour le débogage ou la vérification. Cette fonction est actuellement commentée et peut être utilisée pour des tests ou des validations internes.
+
+### void print_tokens_for_python(t_token *tokens)
+Une variante de print_tokens qui formate la sortie pour une utilisation potentielle avec un script Python. Cette fonction est également commentée.
+
+### Fonction main
+La fonction main est le point d'entrée du programme. Elle initialise les données nécessaires et lance le lexer avec la chaîne de caractères fournie en argument de ligne de commande.
+
+## Interactions entre les fonctions
+
+- ft_lexer utilise skip_spaces, process_quote, process_space, et add_token pour construire et ajouter des tokens à la liste chaînée.
+- add_token fait appel à create_token pour générer un nouveau token et l'ajoute ensuite à la liste de tokens dans data.
+- create_token utilise ft_substr pour créer la chaîne de caractères du token et ft_type_char pour déterminer le type de caractère à la fin du token.
+- process_quote et process_space sont utilisées pour aider à délimiter les tokens lors de l'analyse de la chaîne de caractères d'entrée.
+- init_data est appelée au début de main pour initialiser la structure data avant de commencer le lexing.
+
+Chaque fonction joue un rôle spécifique dans le processus de lexing et est conçue pour interagir avec les autres pour décomposer la chaîne de commande en tokens significatifs.
+
+
+---------------------------------------------------------------------------------------
+
+On entre dans la boucle principale du lexer où l'on itére sur l'index i de chaque caractere.
+En premier, on ne fais pas attention aux espaces.
+des que l'on a un caractere, on vérifie s'il s'agit d'un guillemet.
+Si s'en ait un, tant qu'on est pas arrivé a la fin d'un guillemet similaire, on itére sur i.
+Quand on en a trouvé un, on s'arrete et on crée le token.
+
+si on a pas de guillemet des le debut, on recupere la chaine tant qu'il n'y a pas d'espaces ou de guillemets.
+puis on crée le token.
+
+puis c'est repartis !

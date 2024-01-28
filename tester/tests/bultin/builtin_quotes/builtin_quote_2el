@@ -1,0 +1,159 @@
+// ------------------------------------------------------
+
+//- builtin et squotes a gauche
+
+// 2e, builtin, sq
+  'cd
+  'echo
+  'env
+  'pwd
+  'exit
+  'export
+  'unset
+
+// 2e, 2sq, builtin
+  ''cd
+  ''echo
+  ''env
+  ''pwd
+  ''exit
+  ''export
+  ''unset
+
+// 2e, builtin, 3sq
+  '''cd
+  '''echo
+  '''env
+  '''pwd
+  '''exit
+  '''export
+  '''unset
+
+// 2e, builtin, 4sq
+  ''''cd
+  ''''echo
+  ''''env
+  ''''pwd
+  ''''exit
+  ''''export
+  ''''unset
+
+// ------------------------------------------------------
+
+//- builtin et squotes a droite
+
+// 2e, builtin, sq
+  cd'
+  echo'
+  env'
+  pwd'
+  exit'
+  export'
+  unset'
+
+// 2e, builtin, 2sq
+  cd''
+  echo''
+  env''
+  pwd''
+  exit''
+  export''
+  unset''
+
+// 2e, 3sq, builtin
+  cd'''
+  echo'''
+  env'''
+  pwd'''
+  exit'''
+  export'''
+  unset'''
+
+// 2e, 4sq, builtin
+  cd''''
+  echo''''
+  env''''
+  pwd''''
+  exit''''
+  export''''
+  unset''''
+
+// ------------------------------------------------------
+
+//- builtin et dquotes a droite
+
+// 2e, builtin, dq
+  cd"
+  echo"
+  env"
+  pwd"
+  exit"
+  export"
+  unset"
+
+// 2e, builtin, 2dq
+  cd""
+  echo""
+  env""
+  pwd""
+  exit""
+  export""
+  unset""
+
+// 2e, builtin, 3dq
+  cd"""
+  echo"""
+  env"""
+  pwd"""
+  exit"""
+  export"""
+  unset"""
+
+// 2e, builtin, 4dq
+  cd""""
+  echo""""
+  env""""
+  pwd""""
+  exit""""
+  export""""
+  unset""""
+
+// ------------------------------------------------------
+
+//- builtin et dquotes a gauche
+
+// 2e, builtin, dq
+  "cd
+  "echo
+  "env
+  "pwd
+  "exit
+  "export
+  "unset
+
+// 2e, 2dq, builtin
+  ""cd
+  ""echo
+  ""env
+  ""pwd
+  ""exit
+  ""export
+  ""unset
+
+// 2e, 3dq, builtin
+  """cd
+  """echo
+  """env
+  """pwd
+  """exit
+  """export
+  """unset
+
+// 2e, 4dq, builtin
+  """"cd
+  """"echo
+  """"env
+  """"pwd
+  """"exit
+  """"export
+  """"unset

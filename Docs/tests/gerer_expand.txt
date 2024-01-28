@@ -1,0 +1,64 @@
+➜  tester git:(main) ✗ bash --posix
+bash-5.1$ $!
+bash-5.1$ echo $!
+
+bash-5.1$ echo $/
+$/
+bash-5.1$ echo $\
+> ^C
+bash-5.1$ echo $$
+1873394
+bash-5.1$ echo $$$
+1873394$
+bash-5.1$ echo $$$$
+18733941873394
+bash-5.1$ echo $$$$$
+18733941873394$
+bash-5.1$ echo $$$$$$
+187339418733941873394
+bash-5.1$ echo $$$$$$
+187339418733941873394
+bash-5.1$ echo $$$$$$$
+187339418733941873394$
+bash-5.1$ $>
+bash: syntax error near unexpected token `newline'
+bash-5.1$ $<
+bash: syntax error near unexpected token `newline'
+bash-5.1$ $,
+bash: $,: command not found
+bash-5.1$ $>
+bash: syntax error near unexpected token `newline'
+bash-5.1$ $.
+bash: $.: command not found
+bash-5.1$ echo $#
+0
+bash-5.1$ echo $!
+
+bash-5.1$ echo $goos
+
+bash-5.1$ echo $. $, 
+$. $,
+bash-5.1$ echo $.
+$.
+bash-5.1$ echo $,
+$,
+
+bilan:
+    - si on a $ puis un ou plusieurs dollars qui se suivent alors
+        envoyer un message d'erreur pour dire que ce n'est pas un cas a gerer
+    - si la suivant n'est pas un caracterer alphanumerique
+
+bash-5.1$ echo $4
+
+bash-5.1$ echo $86
+6
+bash-5.1$ echo $111
+11
+bash-5.1$ echo $12
+2
+bash-5.1$ echo $1
+
+- creer un booleen dans la structure token qui nous informe si le token a besoin d'un expand
+
+si token->is_expandable 
+    si 

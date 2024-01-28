@@ -1,0 +1,18 @@
+edesaint@bess-f2r5s4:~/42-cursus/test$ wc -c < file << a
+> cou
+> a
+4
+edesaint@bess-f2r5s4:~/42-cursus/test$ wc -c << a < file
+> cou
+> a
+8
+edesaint@bess-f2r5s4:~/42-cursus/test$ wc -c << a < file << b
+> cou
+> a
+> abcdefghijklmnopqrstuvwxyz
+> b
+27
+
+Bilan:
+on prends la derniere redirection dans l'ordre qu'elle
+apparaisse dans la commande

@@ -1,0 +1,47 @@
+// builtin et espaces
+
+// e, builtin
+ cd
+ echo
+ env
+ pwd
+ exit
+ export
+ unset
+
+// builtin, e
+cd 
+echo 
+env 
+pwd 
+exit 
+export 
+unset 
+
+// e, builtin, e
+ cd 
+ echo 
+ env 
+ pwd 
+ exit 
+ export 
+ unset 
+
+// e, e, builtin
+  cd
+  echo
+  env
+  pwd
+  exit
+  export
+  unset
+
+// e, e, builtin, e, e
+  cd  
+  echo  
+  env  
+  pwd  
+  exit  
+  export  
+  unset  
+

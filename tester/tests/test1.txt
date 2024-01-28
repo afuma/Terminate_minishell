@@ -1,0 +1,71 @@
+
+# Syntax error
+# Pattern: syntax, mot
+>echo
+>>echo
+<<echo
+<echo
+|echo
+
+# Pattern: espace, syntax, mot
+ >echo
+ >>echo
+ <<echo
+ <echo
+ |echo
+
+# Pattern: syntax, espace, mot
+> echo
+>> echo
+<< echo
+< echo
+| echo
+
+# Pattern: mot, espace, syntax
+echo >
+echo >>
+echo <<
+echo <
+echo |
+
+# Pattern: mot, espace, syntax, espace
+echo > 
+echo >> 
+echo << 
+echo < 
+echo | 
+
+# Pattern: espace, mot, espace, syntax, espace
+ echo > 
+ echo >> 
+ echo << 
+ echo < 
+ echo | 
+
+# Pattern: espace, mot, espace, syntax, pipe
+ echo >|
+ echo >>|
+ echo <<|
+ echo <|
+ echo ||
+
+# Pattern: espace, mot, espace, syntax, pipe, espace
+ echo >| 
+ echo >>| 
+ echo <<| 
+ echo <| 
+ echo || 
+
+# Pattern: e, m, e, s, e, p
+ echo > |
+ echo >> |
+ echo << |
+ echo < |
+ echo | |
+
+ executer le script pour generer toutes les combinaisons possibles
+ puis de les formater correctement dans un fichier (demander a chatgpt de creer ce script)
+ avec le pattern et les commandes associe pour un cas particulier, 
+ par exemple le mot "echo" pour m, un espace pour e etc..
+
+ puis les tester (avec le script de test)

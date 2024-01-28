@@ -1,0 +1,25 @@
+
+
+On initialise l'environnement
+    Si FALSE:
+        message d'erreur
+
+On initialise la structure data
+    Si FALSE:
+        message d'erreur
+        free_env
+
+On verifie si les quotes sont gerers correctement
+    Si FALSE:
+        message d'erreur
+        free_env + free data
+
+on cree le lexer, determine le type des tokens, verfie la syntax, on expand, on passe les filtres
+    Si FALSE:
+        message d'erreur
+        free_env + free data + free_token
+
+on cree le parser -> c'est a dire les nodes
+    Si FALSE:
+        message d'erreur
+        free_env + free data + free_token + free_nodes (sachant que les nodes et les tokens pointent vers la meme adresse)

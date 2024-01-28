@@ -1,0 +1,17 @@
+
+CAS 1:
+cas du sujet:
+exit 5 | exit 6
+echo $?
+
+CAS 2:
+si tu es dans le dossier
+et que tu supprime le dossier
+il ne faut pas qu'il crash
+
+CAS 3: env -i (doit tout supprimer ou laisser que quelques info)
+> env -i bash
+> env
+> PWD=/mnt/nfs/homes/edesaint/42-cursus/final_minishell
+SHLVL=1
+_=/usr/bin/env

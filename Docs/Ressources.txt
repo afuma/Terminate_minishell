@@ -1,0 +1,13 @@
+christophe portneuve
+prof de programmation de Fabrice (ami a Olivier)
+cours git: https://www.youtube.com/watch?v=ypR-rEBCoag
+
+crwdsec : logiciel opensource cybersecurite que l'on peut implementer soit meme
+
+Triple Ref Pointers - Computerphile: methode pour les listes chainer optimiser
+https://www.youtube.com/watch?v=0ZEX_l0DFK0
+
+-----------------------------------------------------------------------
+Reinitialiser brave/chrome
+rm -rf ~/.config/google-chrome/Singleton*
+rm -rf ~/.config/BraveSoftware/Brave-Browser/Singleton*

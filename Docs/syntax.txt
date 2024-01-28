@@ -1,0 +1,11 @@
+// on parcours la chaine de caractere input (l'invite)
+// si on a un pipe alors on verifie si il y a du 'texte' avant ou apres
+//     si le 'texte' apres est un pipe, alors erreur syntax
+//     si le texte apres un > et un > alors on continue et si un nouveau element (redir ou pipe) alors erreur
+    
+// si on a un guillemet 
+// /*
+// Syntax error :
+// -> si token rencontre (|, < ou >), on regarde avant si il y a du "texte",
+// apres si il ya du "texte" entre le token et la fin de la string ou le next token
+// -> si apres < il y a < ou apres > il y a > c bon mais pas de <> ou >< */

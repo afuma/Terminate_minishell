@@ -1,0 +1,8 @@
+builtin
+cd
+echo
+env
+pwd
+exit
+export
+unset

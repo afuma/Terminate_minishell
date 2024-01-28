@@ -1,0 +1,13 @@
+On compte le nombre de pipes,
+puis on cree et on ajoute les nodes.
+On obtient ainsi: une liste de noeuds qui correspondent au maillon separer par les pipes.
+
+Cela inclut un parsing quasi parfait pour avoir les bons tokens.
+par exemple si on a: echo bonjour'|' et (ce nest pas le cas ici)
+mais supposons qu'on compte un pipe en trop, il faudras gerer le cas ou on s'est trompe
+pour au moins que ca segfault pas.
+
+Ce cas la ne fonctionne pas: a tester: cat <<< bonjour
+il faut ignorer le <<<
+
+-----------------------------------------------------------------------

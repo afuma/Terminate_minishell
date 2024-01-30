@@ -6,11 +6,23 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 14:01:14 by letnitan          #+#    #+#             */
-/*   Updated: 2024/01/28 19:49:29 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/30 17:49:25 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+void	init_env_null(t_env *env)
+{
+	env = malloc(sizeof(t_env));
+	if (!env)
+		return ;
+	env->first = NULL;
+	env->last = NULL;
+	env->len = 0;
+	env->lst_exit = 0;
+}
+
 
 t_env_link	*env_new_link(char *str)
 {

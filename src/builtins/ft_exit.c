@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 21:22:06 by wnguyen           #+#    #+#             */
-/*   Updated: 2024/01/26 15:36:45 by wnguyen          ###   ########.fr       */
+/*   Updated: 2024/01/30 17:21:34 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	ft_exit(t_node *node, t_env *env)
 	args = node->tab_exec;
 	exit_status = 0;
 	if (!args[1])
-		exit(exit_status);
+		return(exit_status);
 	if (!is_valid_exit_num(args[1]))
 		exit_with_error(args[1]);
 	exit_status = ft_atoi(args[1]);
@@ -62,5 +62,5 @@ int	ft_exit(t_node *node, t_env *env)
 	}
 	// ft_putendl_fd("exit", STDOUT_FILENO);
 	env->lst_exit = exit_status;
-	exit(exit_status);
+	return (exit_status);
 }

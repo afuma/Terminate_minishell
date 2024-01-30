@@ -53,6 +53,7 @@ SRC_FILES = main.c \
 			init/init_data.c \
 			init/init_env.c \
 			free/free_2.c \
+			free/free_env.c \
 			free/free.c \
 			utils/utils.c \
 			utils/transform_enum.c \

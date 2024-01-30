@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 08:31:10 by blax              #+#    #+#             */
-/*   Updated: 2024/01/30 16:28:55 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/30 17:46:44 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,9 @@ void free_nodes(t_node *node);
 void free_tokens(t_token *token);
 void free_data(t_data *data);
 
+// free_env.c
+void    free_env(t_env *env);
+
 // free_2.c
 void free_all(t_data *data);
 
@@ -122,6 +125,7 @@ t_env_link	*env_new_link(char *str);
 void	env_connect_links(t_env_link *prev, t_env_link *current);
 t_env	*init_mini_env(void);
 t_env *init_env(char **system_env);
+void	init_env_null(t_env *env);
 
 //init_data.c
 t_data	*init_data(char *str, t_env *env);

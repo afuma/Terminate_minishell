@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:23:51 by blax              #+#    #+#             */
-/*   Updated: 2024/01/30 16:51:16 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/30 18:05:51 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,12 @@ bool ft_main(t_data *data, t_env *env)
 	if (!execute_command_node(data->node, env))
 		return (false);
     // free_all(data);
+	if (data->node && data->node->tab_exec &&
+		ft_strcmp(data->node->tab_exec[0], "exit") == 0)
+	{
+		free_all(data);
+		exit(EXIT_SUCCESS);
+	}
     return (true);
 }
 
@@ -66,15 +72,18 @@ int	main(int argc, char *argv[], char **env)
 	if (argc > 2) //(1)
 		return (printf("minishell : parameters : bad usage\n"), 0);
 	data = NULL;
+	my_env = NULL;
 	argv[0] = '\0';
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, handle_sigint);
+	// init_env_null(my_env);
 	if (!env || !env[0])
 		my_env = init_mini_env();
 	else
 		my_env = init_env(env);
 	update_shlvl(my_env);
 	main_loop(data, my_env);
+	free_env(my_env);
 	return (0);
 }
 
@@ -86,7 +95,7 @@ bool main_loop(t_data *data, t_env *my_env)
 	{
 		command = readline("minishell> ");
 		if (handle_ctrl_d(command))
-			break ;
+			break;
 		if (command && *command)
 		{
 			add_history(command);

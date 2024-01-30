@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:23:51 by blax              #+#    #+#             */
-/*   Updated: 2024/01/29 20:19:32 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/30 16:51:16 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,28 +33,29 @@ int				g_info;
 // 	}
 // }
 
-int ft_main(t_data *data) //, t_env *env)
+bool ft_main(t_data *data, t_env *env)
 {
     // t_data *data;
 
     if (!is_closed_quotes(data))
-    	return (free_all(data), perror("unclosed quotes"), 0);
+    	return (free_all(data), perror("unclosed quotes"), false);
 		// ft_error_2(data, "unclosed_quotes");
     ft_lexer(data);
     if (!data->token)
-        return (free_all(data), 0);
+        return (free_all(data), false);
     determine_token_types(data);
     if (!verif_syntax(data->token))
-        return (free_all(data), perror("syntax_erreur"), 0);
+        return (free_all(data), perror("syntax_erreur"), false);
     if (!pass_on_filters(data))
-		return (free_all(data), perror("filter_erreur"), 0);
+		return (free_all(data), perror("filter_erreur"), false);
         // ft_error_2(data, "filter_erreur");
     parser(data);
-    print_tokens(data->token);
-    print_nodes(data);
-	// execute_command_node(data->node, env);
+    // print_tokens(data->token);
+    // print_nodes(data);
+	if (!execute_command_node(data->node, env))
+		return (false);
     // free_all(data);
-    return (0);
+    return (true);
 }
 
 int	main(int argc, char *argv[], char **env)
@@ -90,7 +91,7 @@ bool main_loop(t_data *data, t_env *my_env)
 		{
 			add_history(command);
 			data = init_data(command, my_env);
-			ft_main(data); //, my_env);
+			ft_main(data, my_env);
 			// printf("je free data encore !");
 			free_data(data);
 		}

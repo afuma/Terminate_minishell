@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 10:04:08 by blax              #+#    #+#             */
-/*   Updated: 2024/01/29 12:55:56 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/30 16:54:23 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	execute_single_cmd(t_node *node, t_env *env)
 	}
 	if (pid == 0)
 	{
-		if (exec_redir(node) == EXIT_FAILURE)
+		if (!exec_redir(node))
 			exit(EXIT_FAILURE);
 		envp = convert_env_to_tab(env);
 		execute_command(node, envp);
@@ -41,23 +41,23 @@ void	execute_single_cmd(t_node *node, t_env *env)
 	}
 }
 
-void	execute_command_node(t_node *node, t_env *env)
+bool	execute_command_node(t_node *node, t_env *env)
 {
 	char	**envp;
 	int		stdout_backup;
 
 	stdout_backup = dup(STDOUT_FILENO);
 	if (!node || !node->tab_exec || !node->tab_exec[0] || !node->type)
-		return (ft_putstr_fd("Invalid command\n", STDERR_FILENO),
-			exit(EXIT_FAILURE));
+		return (ft_putstr_fd("Invalid command\n", STDERR_FILENO), false);
 	if (node->id == 0 && node->next == NULL && is_builtin(node))
 	{
-		if (exec_redir(node) == EXIT_FAILURE)
-			exit(EXIT_FAILURE);
+		if (!exec_redir(node))
+			return (false);
 		if (node->tab_exec[0] && ft_strcmp(node->tab_exec[0], "exit") == 0)
 			ft_putendl_fd("exit", STDOUT_FILENO);
 		exec_builtin(node, env);
-		dup2(stdout_backup, STDOUT_FILENO);
+		if (dup2(stdout_backup, STDOUT_FILENO) < 0)
+			return (false);
 		close(stdout_backup);
 	}
 	else if (node->next != NULL)
@@ -68,6 +68,7 @@ void	execute_command_node(t_node *node, t_env *env)
 	}
 	else
 		execute_single_cmd(node, env);
+	return (true);
 }
 
 // {

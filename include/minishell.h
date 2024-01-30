@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 08:31:10 by blax              #+#    #+#             */
-/*   Updated: 2024/01/29 20:07:08 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/30 16:28:55 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ extern int g_info;
 
 // main.c
 bool main_loop(t_data *data, t_env *my_env);
-int ft_main(t_data *data); //, t_env *env)
+bool ft_main(t_data *data, t_env *env);
 
 // ------------------------- BUILTIN ---------------------------------
 
@@ -256,6 +256,7 @@ bool remove_quotes(char *input, char type_quote);
 // filter_concatenate.c
 bool filter_concatenate(t_token *token);
 bool is_space_between_tokens(t_token *token);
+bool ft_merge_token(t_token *token);
 bool merge_token(t_token *dst, t_token *src);
 char *merge_token_str(t_token *dst, t_token *src);
 
@@ -274,15 +275,18 @@ void	get_and_save_heredoc_content(t_env *env, int fd, char *delimiter);
 // ------------------ EXEC --------------------
 
 // exec.c
-void			execute_command_node(t_node *node, t_env *env);
+bool			execute_command_node(t_node *node, t_env *env);
 
 // get_path.c
 char			*get_cmd_path(char *cmd, char **envp);
 
 // exec_redir.c
-int				exec_redir(t_node *node);
+bool				exec_redir(t_node *node);
+bool				exec_redir_1(t_node *node);
+bool				exec_redir_2(t_node *node);
 
 // exec_is_redir.c
+bool is_empty_file(char *name);
 bool is_redir_in(char *name);
 bool is_redir_out(char *name, int type_redir);
 

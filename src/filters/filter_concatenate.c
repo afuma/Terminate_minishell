@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 22:33:37 by edesaint          #+#    #+#             */
-/*   Updated: 2024/01/28 14:30:34 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/30 15:34:37 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,26 @@
 // ou sinon dst et src mais donc voir pour le filter comme pour l'expand
 // voir pour creer une autre fonction utilisant un pointeur de fonction
 // ou voir comment passer plusieurs argument avec un pointeur de fonction
+
+bool ft_merge_token(t_token *token)
+{
+    if (is_syntax_string(token->next->str) || \
+        is_syntax_string(token->str))
+    {
+        return (false);
+    }
+    while (token && token->next && !is_space_between_tokens(token))
+        merge_token(token, token->next);
+    return (true);
+}
+
 bool filter_concatenate(t_token *token)
 {
     // if (!token || token->id == 0)
     //     return (true);
-    while (token && token->next && !is_space_between_tokens(token))
+    while (token && token->next)
     {
-        if (!is_syntax_string(token->next->str) && \
-            !is_syntax_string(token->str))
-        {
-            merge_token(token, token->next);
-        }
+        ft_merge_token(token);
         token = token->next;
     }
     return (true);

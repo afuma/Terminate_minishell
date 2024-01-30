@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:13:03 by wnguyen           #+#    #+#             */
-/*   Updated: 2024/01/28 19:48:12 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/30 16:41:05 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ int	exec_builtin(t_node *node, t_env *env)
 		cpy_stdout = dup(STDOUT_FILENO);
 	exit_status = builtin_command(node, env, 1);
 	if (node->redir_out || node->redir_append)
-		dup2(cpy_stdout, STDOUT_FILENO);
+	{
+		if (dup2(cpy_stdout, STDOUT_FILENO) < 0)
+			return (perror("dup2"), false);
+	}
 	return (exit_status);
 }

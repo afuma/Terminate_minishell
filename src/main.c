@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:23:51 by blax              #+#    #+#             */
-/*   Updated: 2024/01/30 18:05:51 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/30 20:28:26 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ bool ft_main(t_data *data, t_env *env)
 {
     // t_data *data;
 
+	if (ft_strcmp(data->str, "exit") == 0)
+	{
+		printf("exit je free !!");
+		free_all(data);
+		exit(EXIT_SUCCESS);
+	}
     if (!is_closed_quotes(data))
     	return (free_all(data), perror("unclosed quotes"), false);
 		// ft_error_2(data, "unclosed_quotes");
@@ -55,12 +61,6 @@ bool ft_main(t_data *data, t_env *env)
 	if (!execute_command_node(data->node, env))
 		return (false);
     // free_all(data);
-	if (data->node && data->node->tab_exec &&
-		ft_strcmp(data->node->tab_exec[0], "exit") == 0)
-	{
-		free_all(data);
-		exit(EXIT_SUCCESS);
-	}
     return (true);
 }
 

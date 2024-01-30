@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 13:51:49 by wnguyen           #+#    #+#             */
-/*   Updated: 2024/01/27 17:50:54 by wnguyen          ###   ########.fr       */
+/*   Updated: 2024/01/30 20:05:14 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,29 +34,29 @@ void	update_pwd(t_env *env)
 	free(pwd);
 }
 
-int	ft_cd(t_node *node, t_env *env)
+bool	ft_cd(t_node *node, t_env *env)
 {
 	char	*path;
 
 	if (node->tab_exec[1] && node->tab_exec[2])
-		return (ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO), 1);
+		return (ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO), false);
 	if (node->tab_exec[1] && ft_strcmp(node->tab_exec[1], "~") != 0)
 		path = node->tab_exec[1];
 	else
 	{
 		path = get_env_name(env, "HOME");
 		if (!path)
-			return (ft_putstr_fd("cd: HOME not set\n", STDERR_FILENO), 1);
+			return (ft_putstr_fd("cd: HOME not set\n", STDERR_FILENO), false);
 	}
-	if (strcmp(path, "-") == 0)
+	if (ft_strcmp(path, "-") == 0)
 	{
 		path = get_env_name(env, "OLDPWD");
 		if (!path)
-			return (ft_putstr_fd("cd: OLDPWD not set\n", STDERR_FILENO), 1);
+			return (ft_putstr_fd("cd: OLDPWD not set\n", STDERR_FILENO), false);
 	}
 	update_oldpwd(env);
 	if (chdir(path) == -1)
-		return (perror("cd: chdir error"), 1);
+		return (perror("cd: chdir error"), false);
 	update_pwd(env);
-	return (0);
+	return (true);
 }

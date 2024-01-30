@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 21:31:23 by wnguyen           #+#    #+#             */
-/*   Updated: 2024/01/24 14:47:32 by wnguyen          ###   ########.fr       */
+/*   Updated: 2024/01/30 18:36:29 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ bool	is_n_option(char *str)
  * Supports the '-n' option to suppress the trailing newline.
  */
 
-int	ft_echo(t_node *node, t_env *env)
+bool	ft_echo(t_node *node, t_env *env)
 {
 	int	i;
 	int	n_option;
@@ -48,7 +48,7 @@ int	ft_echo(t_node *node, t_env *env)
 	i = 1;
 	n_option = 0;
 	if (!node->tab_exec[1])
-		return (ft_putchar_fd('\n', STDOUT_FILENO), 0);
+		return (ft_putchar_fd('\n', STDOUT_FILENO), false);
 	while (node->tab_exec[i] && is_n_option(node->tab_exec[i]))
 	{
 		n_option = 1;
@@ -63,5 +63,5 @@ int	ft_echo(t_node *node, t_env *env)
 	}
 	if (!n_option)
 		ft_putchar_fd('\n', STDOUT_FILENO);
-	return (0);
+	return (true);
 }

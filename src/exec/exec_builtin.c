@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:13:03 by wnguyen           #+#    #+#             */
-/*   Updated: 2024/01/30 16:41:05 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/30 20:05:45 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ bool	is_builtin(t_node *node)
 int	builtin_command(t_node *node, t_env *env, int pid)
 {
 	if (!node || !node->tab_exec || !node->tab_exec[0] || !node->type)
-		return (ft_putstr_fd("Invalid command\n", STDERR_FILENO),
-			exit(EXIT_FAILURE), 1);
+		return (ft_putstr_fd("Invalid command\n", STDERR_FILENO), 1);
 	if (ft_strcmp(node->tab_exec[0], "echo") == 0)
 		return (ft_echo(node, env));
 	else if (ft_strcmp(node->tab_exec[0], "cd") == 0)
@@ -54,7 +53,7 @@ int	builtin_command(t_node *node, t_env *env, int pid)
 		exit(EXIT_SUCCESS);
 }
 
-int	exec_builtin(t_node *node, t_env *env)
+bool	exec_builtin(t_node *node, t_env *env)
 {
 	int	exit_status;
 	int	cpy_stdout;

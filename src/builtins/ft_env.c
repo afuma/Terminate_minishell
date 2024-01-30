@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 07:33:34 by wnguyen           #+#    #+#             */
-/*   Updated: 2024/01/24 14:31:27 by wnguyen          ###   ########.fr       */
+/*   Updated: 2024/01/30 19:57:32 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	ft_env(t_node *node, t_env *env)
+bool	ft_env(t_node *node, t_env *env)
 {
 	t_env_link	*current;
 
 	if (node->tab_exec[1])
-		return (125);
+		return (false);
 	current = env->first;
 	while (current != NULL)
 	{
@@ -27,5 +27,5 @@ int	ft_env(t_node *node, t_env *env)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 		current = current->next;
 	}
-	return (0);
+	return (true);
 }

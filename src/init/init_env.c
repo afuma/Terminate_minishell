@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 14:01:14 by letnitan          #+#    #+#             */
-/*   Updated: 2024/01/30 17:49:25 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/30 18:43:16 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,14 @@ t_env_link	*env_new_link(char *str)
 	new_link = malloc(sizeof(t_env_link));
 	if (!new_link)
 		return (NULL);
+	new_link->next = NULL;
+	new_link->prev = NULL;
 	tmp = ft_strchr(str, '=');
 	if (tmp == 0)
+	{
 		new_link->name = ft_strdup(str);
+		new_link->content = NULL;
+	}
 	else
 	{
 		new_link->name = ft_strndup(str, (tmp - &str[0]));

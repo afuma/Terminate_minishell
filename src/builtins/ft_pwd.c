@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 06:47:01 by wnguyen           #+#    #+#             */
-/*   Updated: 2024/01/24 14:41:59 by wnguyen          ###   ########.fr       */
+/*   Updated: 2024/01/30 18:37:36 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 * En cas d'erreur, affiche un message d'erreur.
 */
 
-int	ft_pwd(t_node *node, t_env *env)
+bool	ft_pwd(t_node *node, t_env *env)
 {
 	char	*cwd;
 
@@ -32,8 +32,8 @@ int	ft_pwd(t_node *node, t_env *env)
 	else
 	{
 		perror("ft_pwd: getcwd error");
-		return (1);
+		return (false);
 	}	
 	ft_putchar_fd('\n', STDOUT_FILENO);
-	return (0);
+	return (false);
 }

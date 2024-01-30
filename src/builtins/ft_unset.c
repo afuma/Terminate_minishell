@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 20:21:48 by wnguyen           #+#    #+#             */
-/*   Updated: 2024/01/24 18:14:43 by wnguyen          ###   ########.fr       */
+/*   Updated: 2024/01/30 18:39:40 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	unset_error(char *arg)
 	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 }
 
-int	ft_unset(t_node *node, t_env *env)
+bool	ft_unset(t_node *node, t_env *env)
 {
 	t_env_link	*current;
 	t_env_link	*next;
@@ -81,7 +81,7 @@ int	ft_unset(t_node *node, t_env *env)
 		while (current)
 		{
 			next = current->next;
-			if (strcmp(current->name, args[i]) == 0)
+			if (ft_strcmp(current->name, args[i]) == 0)
 			{
 				remove_env_link(env, current);
 				env->len--;
@@ -90,5 +90,5 @@ int	ft_unset(t_node *node, t_env *env)
 		}
 		i++;
 	}
-	return (0);
+	return (true);
 }

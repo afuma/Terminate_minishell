@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 21:00:04 by wnguyen           #+#    #+#             */
-/*   Updated: 2024/01/27 19:22:09 by wnguyen          ###   ########.fr       */
+/*   Updated: 2024/01/30 18:38:43 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	check_env_name(const char *str)
 	return (1);
 }
 
-static int	process_export_arg(char *arg, t_env *env)
+static bool	process_export_arg(char *arg, t_env *env)
 {
 	char	*name;
 	char	*content;
@@ -73,12 +73,12 @@ static int	process_export_arg(char *arg, t_env *env)
 	else
 	{
 		export_error(arg);
-		return (EXIT_FAILURE);
+		return (false);
 	}
-	return (EXIT_SUCCESS);
+	return (false);
 }
 
-int	ft_export(t_node *node, t_env *env)
+bool	ft_export(t_node *node, t_env *env)
 {
 	int	i;
 
@@ -87,11 +87,11 @@ int	ft_export(t_node *node, t_env *env)
 		return (print_env_var(env), 0);
 	while (node->tab_exec[i] && node->tab_exec[i][0] != '#')
 	{
-		if (process_export_arg(node->tab_exec[i], env) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
+		if (!process_export_arg(node->tab_exec[i], env))
+			return (false);
 		i++;
 	}
-	return (EXIT_SUCCESS);
+	return (true);
 }
 
 // int	ft_export(t_node *node, t_env *env)

@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 08:31:10 by blax              #+#    #+#             */
-/*   Updated: 2024/01/30 17:46:44 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/30 20:06:01 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ bool ft_main(t_data *data, t_env *env);
 // ------------------------- BUILTIN ---------------------------------
 
 // builtins.c
-int				ft_cd(t_node *node, t_env *env);
-int				ft_echo(t_node *node, t_env *env);
-int				ft_env(t_node *node, t_env *env);
-int				ft_pwd(t_node *node, t_env *env);
-int				ft_unset(t_node *node, t_env *env);
-int				ft_exit(t_node *node, t_env *env);
-int				ft_export(t_node *node, t_env *env);
+bool				ft_cd(t_node *node, t_env *env);
+bool				ft_echo(t_node *node, t_env *env);
+bool				ft_env(t_node *node, t_env *env);
+bool				ft_pwd(t_node *node, t_env *env);
+bool				ft_unset(t_node *node, t_env *env);
+bool				ft_exit(t_node *node, t_env *env);
+bool				ft_export(t_node *node, t_env *env);
 
 // ft_unset.c
 int				is_valid_env_name(const char *str);
@@ -297,7 +297,7 @@ bool is_redir_out(char *name, int type_redir);
 // exec_builtin.c
 bool			is_builtin(t_node *node);
 int				builtin_command(t_node *node, t_env *env, int pid);
-int				exec_builtin(t_node *node, t_env *env);
+bool				exec_builtin(t_node *node, t_env *env);
 
 // exec_cmd.c
 int				execute_command(t_node *node, char **envp);

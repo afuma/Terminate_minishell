@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 22:31:24 by edesaint          #+#    #+#             */
-/*   Updated: 2024/01/28 20:06:47 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/29 13:09:39 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void free_nodes(t_node *node)
 {
     t_node *tmp_node;
 
+    if (!node)
+        return ;
     while (node)
     {
         tmp_node = node;
@@ -60,6 +62,8 @@ void free_tokens(t_token *token)
 {
     t_token *tmp_token;
 
+    if (!token)
+        return ;
     while (token)
     {
         tmp_token = token->next;
@@ -84,7 +88,7 @@ void free_data(t_data *data)
         data->env = NULL; // il n'y a qu'un seul env dans minishell 
             // (le mettre a null empechera la structure data de le free je suppose donc a tester)
             // comme ca on enleve la reference vers la zone memoire sans la detruire
-        free(data);
-        data = NULL;
     }
+    // free(data);
+    // data = NULL;
 }

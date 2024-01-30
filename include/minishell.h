@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 08:31:10 by blax              #+#    #+#             */
-/*   Updated: 2024/01/28 19:51:46 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/29 20:07:08 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@
 // # include <stddef.h> //ft_strcmp
 
 extern int g_info;
+
+// ------------------------- MAIN ---------------------------------
+
+// main.c
+bool main_loop(t_data *data, t_env *my_env);
+int ft_main(t_data *data); //, t_env *env)
 
 // ------------------------- BUILTIN ---------------------------------
 
@@ -185,11 +191,9 @@ bool fill_nodes(t_data *data);
 bool delimit_node(t_data *data, t_token *token);
 
 // parser_redir.c
-bool is_redir_append(t_token *token, char *name);
-bool is_redir_out(t_token *token, char *name);
-bool is_redir_in(t_token *token, char *name);
-bool update_redir(t_node *node, t_token *token);
+bool update_redir(t_env *env, t_node *node, t_token *token);
 bool init_redir(t_data *data, t_node *node, t_token *token);
+bool sub_process_heredoc(t_env *env, t_node *node, char *delimiter);
 
 // parser_redir_utils.c
 bool is_redir(t_state type);
@@ -263,10 +267,9 @@ char	*get_name_heredoc(void);
 void	get_and_save_heredoc_content(t_env *env, int fd, char *delimiter);
 
 // heredoc.c
-bool fill_heredoc(t_data *data);
-bool sub_process_heredoc(t_env *env, t_node *node, char *delimiter);
-bool process_heredoc(t_data *data, t_node *node);
-bool is_redir_heredoc(t_state ttoken_1, t_state ttoken_2);
+// bool fill_heredoc(t_data *data);
+// bool sub_process_heredoc(t_env *env, t_node *node, char *delimiter);
+// bool process_heredoc(t_data *data, t_node *node);
 
 // ------------------ EXEC --------------------
 
@@ -278,6 +281,10 @@ char			*get_cmd_path(char *cmd, char **envp);
 
 // exec_redir.c
 int				exec_redir(t_node *node);
+
+// exec_is_redir.c
+bool is_redir_in(char *name);
+bool is_redir_out(char *name, int type_redir);
 
 // exec_builtin.c
 bool			is_builtin(t_node *node);

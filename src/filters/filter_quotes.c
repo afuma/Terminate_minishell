@@ -6,13 +6,12 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 09:10:16 by blax              #+#    #+#             */
-/*   Updated: 2024/01/25 19:23:23 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/29 14:39:35 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// Methode 2
 bool remove_quotes(char *input, char type_quote)
 {
     size_t len;

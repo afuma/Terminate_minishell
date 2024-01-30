@@ -1,0 +1,114 @@
+
+- WILL doit gerer le cas ou une commande ou un argument vaut rien
+    - voir enlever les arguments qui ne servent a rien au moment du parsing
+- gestion des signaux
+    - exit ctrl + D segfault si aucune commande n''as ete rentrer auparavant
+    - voir gestion des signaux dans le heredoc
+    - ctrl + \ segfault
+- vérifier les leaks (bien tout free)
+- Mettre en place le tester
+- voir le parsing pour la redirection d'erreur: 2>
+- implementer la redirection d'erreur
+- Reinitialiser data si besoin (HEAP/STACK)
+- Gerer les cas particulier de gerer_expand.txt
+- implementer caracteres speciaux + builtin => erreur
+    par exemple: "cd [*]" ou "export !"
+    ce sont des cas non gerer par les builtins
+
+Etienne ET Will
+
+- Voir Olivier pour execution (on ne verifie pas les fichiers avant dans le parsing)
+mais apres les forks, dans l'exec
+
+
+creer un attribut pour le delimit_node dans token
+comme ca on definit si on est dans un node en fonction de l'id_node de token
+par exemple:
+tmp_id_node = token->id_node;
+while token->id_node == tmp_id_node
+alors on process
+sinon
+on passe a autre chose
+
+open
+unlink
+close
+=> quand close, alors le fichier disparait
+
+voir la fonction signal (voir code Robin)
+signal(SIGQUIT, SIG_IGN);
+
+
+-------------------------------------------------------------------------------
+IMPERATIF !!!
+gerer ces cas la:
+edesaint@bess-f4r1s4:~/42-cursus/terminate_minishell$ echo 'bonjour' >'''' file.txt
+bash: : No such file or directory
+edesaint@bess-f4r1s4:~/42-cursus/terminate_minishell$ echo 'bonjour' >"" file.txt
+bash: : No such file or directory
+
+dans la structure rajouter le nombre de single/double quotes attacher au token
+si possible attacher les quotes de droites dans le token en cours
+    - dans le parsing, si is_redir(type_token) et que is_attached_quotes > 1
+        alors mettre a jour le nom du fichier a T_EMPTY puis gerer ce cas lors des redirections
+        et passer le cur_state (T_FILE)
+
+    - ou sinon, considerer les doubles quotes comme des tokens vides comme au tout debut
+        de l'aventure.
+        apres on les merges a la suite si besoin
+        => faire les redirections avant la concatenation
+        apres on fait un filtre (le premier)
+            on parcours tous les tokens, et si le token est une redirection 
+                et que le suivant est un T_EMPTY, alors node->type = 0;
+                    en gros il y a une erreur (un nom de fichier vide)
+
+SOLUTION:
+    - considerer les doubles quotes vides comme des tokens
+    - bien remove quotes avant de concatener
+    - on concatene de toutes facons (que l'on est des tokens vides ou non)
+    - et ensuite creer le filtre:
+        - si is_redir(token->type_token) && 
+            (token->type_str == S_QUOTE ||
+            token->type_str == D_QUOTE) &&
+            token->type_token == T_FILE &&
+            token->is_space == 0
+            alors je le concatene pas (pour le considerer comme un T_FILE)
+                puis quand on verifieras les fichiers au moment de l'exec
+                mettre une condition pour mettre node->type = false
+                en gros dire que le node n'est pas valide pour ne pas l'executer
+-----------------------------------------------------------------------------------------
+
+=> filtre d'erreur 1:
+    - si type_token == redir (tous type de redir je suppose) (pas le heredoc qui considere qu'un double quote
+    correspond a un caractere null est donc que cliquez sur la touche entrer correspond au delimiter)
+    et que son attribut rstick est "S_QUOTE"
+    et que l'attribut lstick du token suivant est "S_SPACE"
+alors on retourne une erreur
+
+=> filtre 2:
+prends ce cas la aussi en compte: echo 'bonjour'|wc -'c''l' (on a 3 tokens qu'il faut reunir)
+
+Dans bash (ne retourne pas d'erreur): echo 'bonjour'|wc -''''c
+mon implementation actuelle creer 2 tokens (- et c) ce qui ne va pas du tout
+donc:
+    - soit on creer une fonction pour en fonction du pattern refusionner les tokens, en ayant a l'id puis les fusionner
+    - soit grace au pattern on copie colle directement le tiret avec le caractere d'option dans tab_exec
+
+Dans bash (retourne une erreur): echo 'bonjour'|wc -'''' c
+- si type_token == option
+    et que son attribut rstick est "S_QUOTE"
+    et que l'attribut lstick du token suivant est "S_SPACE"
+alors on retourne une erreur
+- si type_token == option
+    et que son attribut rstick est "S_QUOTE"
+    et que l'attribut lstick du token suivant est "S_QUOTE" et que is_space est egale a true
+alors on retourne une erreur
+
+
+echo >''bonjour -> pas d'erreur
+echo > ''bonjour -> pas d'erreur
+echo >'' bonjour -> erreur
+echo > '' bonjour -> erreur
+
+si is_redir(token) et !token->next->str
+    

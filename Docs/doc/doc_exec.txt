@@ -1,0 +1,25 @@
+
+
+logique execution des process des commandes
+si une seule commande (un node),
+ si ce n'est pas un builtin, alors on execute un process enfant
+ si builtin dans le process parent
+si plusieurs commandes (plusieurs nodes)
+ tout est executer dans les processus enfant
+ 
+ ----------------------------------------------------------------
+
+ // Creates a new t_env_link node by dividing a str from the env at the '=' sign and filles the *name and *content
+t_env_link	*env_new_link(char *str)
+
+//connects the nodes in the t_env struct
+void	env_connect_links(t_env_link *prev, t_env_link *current)
+
+
+// If env is unset, we create a basic env structure : _/, SHLVL, PWD + cur_path, PATH + execve paths
+t_env	*init_mini_env(void)
+
+// Pener a free env correctement, on a malloc CHAQUE t_env_link + une structure t_env
+
+
+t_env *init_env(char **system_env)

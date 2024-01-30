@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:23:51 by blax              #+#    #+#             */
-/*   Updated: 2024/01/28 20:15:15 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/29 20:19:32 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,20 @@ int ft_main(t_data *data) //, t_env *env)
     // t_data *data;
 
     if (!is_closed_quotes(data))
-        ft_error_2(data, "unclosed quotes");
+    	return (free_all(data), perror("unclosed quotes"), 0);
+		// ft_error_2(data, "unclosed_quotes");
     ft_lexer(data);
     if (!data->token)
         return (free_all(data), 0);
     determine_token_types(data);
     if (!verif_syntax(data->token))
-        ft_error_2(data, "syntax_erreur");
+        return (free_all(data), perror("syntax_erreur"), 0);
     if (!pass_on_filters(data))
-        ft_error_2(data, "filter_erreur");
+		return (free_all(data), perror("filter_erreur"), 0);
+        // ft_error_2(data, "filter_erreur");
     parser(data);
     print_tokens(data->token);
-    // print_nodes(data);
+    print_nodes(data);
 	// execute_command_node(data->node, env);
     // free_all(data);
     return (0);
@@ -59,10 +61,10 @@ int	main(int argc, char *argv[], char **env)
 {
 	t_data	*data;
 	t_env	*my_env;
-	char	*command;
 
-	if (argc > 1)
+	if (argc > 2) //(1)
 		return (printf("minishell : parameters : bad usage\n"), 0);
+	data = NULL;
 	argv[0] = '\0';
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, handle_sigint);
@@ -71,6 +73,14 @@ int	main(int argc, char *argv[], char **env)
 	else
 		my_env = init_env(env);
 	update_shlvl(my_env);
+	main_loop(data, my_env);
+	return (0);
+}
+
+bool main_loop(t_data *data, t_env *my_env)
+{
+	char	*command;
+	
 	while (1)
 	{
 		command = readline("minishell> ");
@@ -81,12 +91,12 @@ int	main(int argc, char *argv[], char **env)
 			add_history(command);
 			data = init_data(command, my_env);
 			ft_main(data); //, my_env);
+			// printf("je free data encore !");
 			free_data(data);
 		}
 		free(command);
 	}
 	rl_clear_history();
 	free_all(data);
-	return (0);
+	return (true);
 }
-

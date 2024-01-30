@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 15:48:49 by wnguyen           #+#    #+#             */
-/*   Updated: 2024/01/28 12:56:33 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/28 21:40:29 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,5 @@ char	*ft_strjoin(char *s1, char *s2)
 	ft_memcpy(str, s1, s1len);
 	ft_memcpy(str + s1len, s2, s2len);
 	str[s1len + s2len] = '\0';
-	free(s1);
-	s1 = NULL;
-	free(s2);
-	s2 = NULL;
 	return (str);
 }

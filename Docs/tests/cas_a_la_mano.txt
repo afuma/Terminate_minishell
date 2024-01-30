@@ -15,3 +15,25 @@ CAS 3: env -i (doit tout supprimer ou laisser que quelques info)
 > PWD=/mnt/nfs/homes/edesaint/42-cursus/final_minishell
 SHLVL=1
 _=/usr/bin/env
+
+Adriano Tests
+
+CAS 4:
+test pour la commande cd, si on creer un fichier dans un dossier
+    puis que l'on supprime le dossier
+    => de mettre a jour la variable path (celle duplique pour nos besoins)
+
+CAS 5:
+test pour la commande cd, si on fait: unset HOME (doit supprimer la variable HOME de notre path)
+    => gerer ce cas ou la variable HOME n'existe plus
+
+CAS 6:
+test pour les pipes (petit programme pour taper automatiquement "echo bonjour" 2000 fois),
+    et si on creer plus de 1024 fd, le programme segfault
+=> de faire fd[IN] et fd[OUT] pour gerer le multipipe
+
+CAS 7:
+echo bonjour'|'
+
+CAS 8:
+echo > file.txt 'bonjour' > file_2.txt | wc -c

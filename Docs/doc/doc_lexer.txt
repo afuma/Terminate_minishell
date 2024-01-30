@@ -73,3 +73,20 @@ si on a pas de guillemet des le debut, on recupere la chaine tant qu'il n'y a pa
 puis on crée le token.
 
 puis c'est repartis !
+
+
+------------------------------------------------------------------------------------------
+
+Travailler avec un maillon.
+
+A partir d'une liste de tokens
+    - on trouve le type_token (pipe, le type de redirection etc.)
+de plus on a la position de chaque element dans l'ordre de la commande.
+Ainsi, pour travailler dans un maillon, qui doit etre delimiter par un pipe, alors on a juste a parcourir et a trouver le token de type_token pipe.
+on enregistre la position du pipe courant dans la structure principale data.
+
+Exemple: data->start = 0 et data->end = 7.
+Dans ce cas, on manipule les tokens ayant un id compris entre 0 et 7.
+puis on passeras a un autre maillon
+
+=> Modifie les valeurs de proche en proche vers la droite.

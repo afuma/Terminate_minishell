@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 20:01:20 by edesaint          #+#    #+#             */
-/*   Updated: 2024/01/28 13:48:54 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/29 11:51:18 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,12 @@ bool is_quote(char c)
 
 bool is_space(char c)
 {
-     return (c == ' ' || c == '\t' || c == '\n' || c == '\r');
+     return (c == ' ' || \
+            c == '\t' || \
+            c == '\n' || \
+            c == '\r' || \
+            c == '\v' || \
+            c == '\f');
 }
 
 bool is_double_symbol(t_data *data, int i, char c)

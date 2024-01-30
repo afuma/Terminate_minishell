@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 21:10:09 by wnguyen           #+#    #+#             */
-/*   Updated: 2024/01/28 12:46:19 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/28 21:36:13 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void		*ft_memmove(void *dest, const void *src, size_t n);
 int			ft_memcmp(const void *s1, const void *s2, size_t n);
 void		*ft_memchr(const void *s, int c, size_t n);
 void		*ft_calloc(size_t number, size_t size);
-void		*ft_realloc(void *ptr, size_t new_size);
+// void		*ft_realloc(void *ptr, size_t new_size);
 
 // Part 2 
 

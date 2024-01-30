@@ -63,3 +63,31 @@ edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ echo" b"
 echo b: command not found
 edesaint@bess-f3r4s2:~/42-cursus/final_minishell$ 
 
+--------------------------------------------------------------------------
+
+0
+edesaint@bess-f4r1s4:~/42-cursus/terminate_minishell$ echo 'bonjour' >''file.txt|wc -c
+0
+edesaint@bess-f4r1s4:~/42-cursus/terminate_minishell$ echo 'bonjour' >''file.txt
+edesaint@bess-f4r1s4:~/42-cursus/terminate_minishell$ echo 'bonjour' >''file.txt|
+> ^C
+edesaint@bess-f4r1s4:~/42-cursus/terminate_minishell$ echo 'bonjour' >''file.txt|wc
+      0       0       0
+edesaint@bess-f4r1s4:~/42-cursus/terminate_minishell$ echo 'bonjour' >'' file.txt|wc -c
+bash: : No such file or directory
+0
+edesaint@bess-f4r1s4:~/42-cursus/terminate_minishell$ echo 'bonjour' >'' file.txt
+bash: : No such file or directory
+edesaint@bess-f4r1s4:~/42-cursus/terminate_minishell$ echo 'bonjour' > file.txt
+edesaint@bess-f4r1s4:~/42-cursus/terminate_minishell$ echo 'bonjour' >'''''''''' file.txt
+bash: : No such file or directory
+edesaint@bess-f4r1s4:~/42-cursus/terminate_minishell$ echo 'bonjour' ''> file.txt
+edesaint@bess-f4r1s4:~/42-cursus/terminate_minishell$ echo 'bonjour' ''''> file.txt
+edesaint@bess-f4r1s4:~/42-cursus/terminate_minishell$ echo 'bonjour' >" " file.txt
+edesaint@bess-f4r1s4:~/42-cursus/terminate_minishell$ echo 'bonjour' >" " file.txt
+
+gerer ces cas la:
+edesaint@bess-f4r1s4:~/42-cursus/terminate_minishell$ echo 'bonjour' >'''' file.txt
+bash: : No such file or directory
+edesaint@bess-f4r1s4:~/42-cursus/terminate_minishell$ echo 'bonjour' >"" file.txt
+bash: : No such file or directory

@@ -44,6 +44,7 @@ SRC_FILES = main.c \
 			exec/exec_builtin.c \
 			exec/exec_cmd.c \
 			exec/exec_redir.c \
+			exec/exec_is_redir.c \
 			exec/get_path.c \
 			exec/exec_pipeline.c \
 			env/env_utils.c \

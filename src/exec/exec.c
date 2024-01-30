@@ -6,13 +6,13 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 10:04:08 by blax              #+#    #+#             */
-/*   Updated: 2024/01/30 20:00:58 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/30 22:29:11 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	execute_single_cmd(t_node *node, t_env *env)
+bool	execute_single_cmd(t_node *node, t_env *env)
 {
 	pid_t	pid;
 	int		status;
@@ -27,9 +27,10 @@ void	execute_single_cmd(t_node *node, t_env *env)
 	if (pid == 0)
 	{
 		if (!exec_redir(node))
-			exit(EXIT_FAILURE);
+			exit (EXIT_FAILURE);
 		envp = convert_env_to_tab(env);
-		execute_command(node, envp);
+		if (!execute_command(node, envp))
+			return (false);
 		free(envp);
 		exit(EXIT_SUCCESS);
 	}
@@ -39,6 +40,7 @@ void	execute_single_cmd(t_node *node, t_env *env)
 		if (WIFEXITED(status))
 			g_info = WEXITSTATUS(status);
 	}
+	return (true);
 }
 
 bool	execute_command_node(t_node *node, t_env *env)
@@ -52,7 +54,10 @@ bool	execute_command_node(t_node *node, t_env *env)
 	if (node->id == 0 && node->next == NULL && is_builtin(node))
 	{
 		if (!exec_redir(node))
-			return (false);
+		{
+			free_nodes(node);
+			exit (EXIT_SUCCESS);
+		}
 		if (node->tab_exec[0] && ft_strcmp(node->tab_exec[0], "exit") == 0)
 			ft_putendl_fd("exit", STDOUT_FILENO);
 		if (!exec_builtin(node, env))

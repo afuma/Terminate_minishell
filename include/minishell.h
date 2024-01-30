@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 08:31:10 by blax              #+#    #+#             */
-/*   Updated: 2024/01/30 20:06:01 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/30 22:01:28 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -280,6 +280,7 @@ void	get_and_save_heredoc_content(t_env *env, int fd, char *delimiter);
 
 // exec.c
 bool			execute_command_node(t_node *node, t_env *env);
+bool	execute_single_cmd(t_node *node, t_env *env);
 
 // get_path.c
 char			*get_cmd_path(char *cmd, char **envp);
@@ -300,7 +301,8 @@ int				builtin_command(t_node *node, t_env *env, int pid);
 bool				exec_builtin(t_node *node, t_env *env);
 
 // exec_cmd.c
-int				execute_command(t_node *node, char **envp);
+bool				execute_command(t_node *node, char **envp);
+void    exec_child_process(t_node *node, int in_fd, t_env *env, int *pipe_fds);
 
 // exec_pipeline.c
 void			exec_pipeline(t_node *node, t_env *env);

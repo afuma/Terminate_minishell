@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 11:22:11 by edesaint          #+#    #+#             */
-/*   Updated: 2024/01/22 12:00:33 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/30 22:26:32 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char *get_command(t_token *token)
     if (!token)
         return (NULL);
     if (token->type_token == T_COMMAND)
-        return (token->str);
+        return (ft_strdup(token->str));
     return (NULL);
 }
 
@@ -54,7 +54,7 @@ char *get_argument(t_data *data, t_token *token)
     while (token && token->id <= data->end)
     {
         if (token->type_token == T_ARGUMENT)
-            return (token->str);
+            return (ft_strdup(token->str));
         token = token->next;
     }
     return (NULL);

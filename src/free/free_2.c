@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 22:31:24 by edesaint          #+#    #+#             */
-/*   Updated: 2024/01/30 17:52:24 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/30 22:29:01 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 void free_tab_exec(char **tab_exec)
 {
-    // int i;
+    int i;
 
     if (!tab_exec)
         return ;
-    // i = 0;
-    // while (tab_exec[i])
-	// {
-	// 	free(tab_exec[i]);
-	// 	tab_exec[i] = NULL;
-    //     i++;
-	// }
+    i = 0;
+    while (tab_exec[i])
+	{
+		free(tab_exec[i]);
+		tab_exec[i] = NULL;
+        i++;
+	}
 	free(tab_exec);
     tab_exec = NULL;
 }

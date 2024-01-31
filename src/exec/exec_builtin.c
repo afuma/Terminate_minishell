@@ -6,7 +6,7 @@
 /*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:13:03 by wnguyen           #+#    #+#             */
-/*   Updated: 2024/01/31 16:58:16 by wnguyen          ###   ########.fr       */
+/*   Updated: 2024/01/31 20:46:18 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	builtin_command(t_node *node, t_env *env)
 	else if (ft_strcmp(node->tab_exec[0], "exit") == 0)
 		return (ft_exit(node, env));
 	return (0);
-
 }
 
 bool	exec_builtin(t_node *node, t_env *env)

@@ -6,7 +6,7 @@
 /*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:57:41 by wnguyen           #+#    #+#             */
-/*   Updated: 2024/01/31 19:51:19 by wnguyen          ###   ########.fr       */
+/*   Updated: 2024/01/31 21:35:55 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ bool	execute_command(t_node *node, char **envp)
 		ft_putstr_fd("minishell: ", STDERR_FILENO);
 		ft_putstr_fd(node->tab_exec[0], STDERR_FILENO);
 		ft_putendl_fd(": command not found", STDERR_FILENO);
+		free(cmd_path);
 		return (false);
 	}
 	if (execve(cmd_path, node->tab_exec, envp) == -1)

@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 10:04:08 by blax              #+#    #+#             */
-/*   Updated: 2024/01/31 15:28:47 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/31 15:53:22 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,31 +43,26 @@ bool	execute_single_cmd(t_node *node, t_env *env)
 	return (true);
 }
 
-bool	execute_command_node(t_node *node, t_env *env)
+void	execute_command_node(t_node *node, t_env *env)
 {
 	char	**envp;
 	int		stdout_backup;
 
 	stdout_backup = dup(STDOUT_FILENO);
 	if (!node || !node->tab_exec || !node->tab_exec[0] || !node->type)
-		return (ft_putstr_fd("Invalid command\n", STDERR_FILENO), false);
+		(ft_putstr_fd("Invalid command\n", STDERR_FILENO), exit(1));
 	if (node->id == 0 && node->next == NULL && is_builtin(node))
 	{
 		if (!exec_redir(node))
 		{
 			// free_nodes(node);
-			return (false);
-			// implique d'importer data mais pourquoi pas
-			// free(data);
-			// data = NULL;
-			// exit (EXIT_SUCCESS);
+			return ;
 		}
 		if (node->tab_exec[0] && ft_strcmp(node->tab_exec[0], "exit") == 0)
 			ft_putendl_fd("exit", STDOUT_FILENO);
-		if (!exec_builtin(node, env))
-			return (false);
+		exec_builtin(node, env);
 		if (dup2(stdout_backup, STDOUT_FILENO) < 0)
-			return (close(stdout_backup), false);
+			(close(stdout_backup), exit(1));
 		close(stdout_backup);
 	}
 	else if (node->next != NULL)
@@ -78,5 +73,4 @@ bool	execute_command_node(t_node *node, t_env *env)
 	}
 	else
 		execute_single_cmd(node, env);
-	return (true);
 }

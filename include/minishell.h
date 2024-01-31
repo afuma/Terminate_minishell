@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 08:31:10 by blax              #+#    #+#             */
-/*   Updated: 2024/01/31 13:28:13 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/31 15:50:49 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ extern int g_info;
 // ------------------------- MAIN ---------------------------------
 
 // main.c
-bool main_loop(t_data *data, t_env *my_env);
+bool main_loop(t_env *my_env);
 bool ft_main(t_data *data, t_env *env);
 
 // ------------------------- BUILTIN ---------------------------------
@@ -130,8 +130,8 @@ t_env *init_env(char **system_env);
 void	init_env_null(t_env *env);
 
 //init_data.c
-t_data *malloc_data(t_data *data);
-void	init_data(t_data *data, char *str, t_env *env);
+// t_data *malloc_data(t_data *data);
+t_data	*malloc_and_init_data(char *str, t_env *env);
 
 // ------------------ UTILS --------------------
 
@@ -282,7 +282,7 @@ void	get_and_save_heredoc_content(t_env *env, int fd, char *delimiter);
 // ------------------ EXEC --------------------
 
 // exec.c
-bool			execute_command_node(t_node *node, t_env *env);
+void			execute_command_node(t_node *node, t_env *env);
 bool	execute_single_cmd(t_node *node, t_env *env);
 
 // get_path.c

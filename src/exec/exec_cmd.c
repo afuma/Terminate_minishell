@@ -6,7 +6,7 @@
 /*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:57:41 by wnguyen           #+#    #+#             */
-/*   Updated: 2024/01/31 19:03:08 by wnguyen          ###   ########.fr       */
+/*   Updated: 2024/01/31 19:51:19 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,18 +77,36 @@ void	exec_child_process(t_node *node, int in_fd, t_env *env, int *pipe_fds)
 		if (is_builtin(node))
 		{
 			exec_builtin(node, env);
-			exit_status = EXIT_SUCCESS;
+			exit_status = env->lst_exit;
 		}
 		else if (execute_command(node, envp))
-		{
 			exit_status = EXIT_SUCCESS;
-		}
 	}
 	free_tab(envp);
 	free_nodes(node);
 	node = NULL;
 	free_env(env);
 	exit(exit_status);
+}
+
+void	manage_parent_process(int *in_fd, int *pipe_fds, t_node *current_node)
+{
+	if (*in_fd != STDIN_FILENO && *in_fd != -1)
+		close(*in_fd);
+	if (current_node->next != NULL)
+	{
+		if (pipe_fds[0] != -1)
+			close(pipe_fds[1]);
+		*in_fd = pipe_fds[0];
+	}
+	else
+	{
+		if (pipe_fds[1] != -1)
+			close(pipe_fds[1]);
+		if (pipe_fds[0] != -1)
+			close(pipe_fds[0]);
+		*in_fd = -1;
+	}
 }
 
 // void	exec_child_process(t_node *node, int in_fd, t_env *env, int *pipe_fds)

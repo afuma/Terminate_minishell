@@ -6,7 +6,7 @@
 /*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 10:04:08 by blax              #+#    #+#             */
-/*   Updated: 2024/01/31 20:43:43 by wnguyen          ###   ########.fr       */
+/*   Updated: 2024/01/31 20:50:54 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ bool	execute_single_cmd(t_node *node, t_env *env)
 {
 	pid_t	pid;
 	int		status;
-	char	**envp;
 
 	pid = fork();
 	if (pid == -1)

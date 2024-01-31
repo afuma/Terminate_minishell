@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 22:31:24 by edesaint          #+#    #+#             */
-/*   Updated: 2024/01/31 13:27:42 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/31 18:37:03 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,39 +48,39 @@ void free_redirs(t_node *node)
     }
 }
 
-// void free_nodes(t_node *node)
-// {
-//     t_node *tmp_node;
-
-//     if (!node)
-//         return ;
-//     while (node)
-//     {
-//         tmp_node = node;
-//         node = node->next;
-//         free_tab_exec(tmp_node->tab_exec);
-//         free_redirs(tmp_node);
-//         free(tmp_node);
-//         tmp_node = NULL;
-//     }
-// }
-
 void free_nodes(t_node *node)
 {
     t_node *tmp_node;
 
     if (!node)
         return ;
-    tmp_node = node;
-    while (tmp_node)
+    while (node)
     {
+        tmp_node = node;
+        node = node->next;
         free_tab_exec(tmp_node->tab_exec);
         free_redirs(tmp_node);
-        tmp_node = tmp_node->next;
+        free(tmp_node);
+        tmp_node = NULL;
     }
-    free(node);
-    node = NULL;
 }
+
+// void free_nodes(t_node *node)
+// {
+//     t_node *tmp_node;
+
+//     if (!node)
+//         return ;
+//     tmp_node = node;
+//     while (tmp_node)
+//     {
+//         free_tab_exec(tmp_node->tab_exec);
+//         free_redirs(tmp_node);
+//         tmp_node = tmp_node->next;
+//     }
+//     free(node);
+//     node = NULL;
+// }
 
 void	ft_node_delone(t_node *node)
 {

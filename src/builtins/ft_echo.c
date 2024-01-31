@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 21:31:23 by wnguyen           #+#    #+#             */
-/*   Updated: 2024/01/30 18:36:29 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/31 00:29:57 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-/*
- * Check if the input string is the '-n' option.
- * Returns true if it matches, false otherwise.
- */
 
 bool	is_n_option(char *str)
 {
@@ -32,12 +27,6 @@ bool	is_n_option(char *str)
 	}
 	return (true);
 }
-
-/*
- * Custom implementation of the 'echo' command.
- * Outputs the given arguments to the standard output.
- * Supports the '-n' option to suppress the trailing newline.
- */
 
 bool	ft_echo(t_node *node, t_env *env)
 {
@@ -63,5 +52,6 @@ bool	ft_echo(t_node *node, t_env *env)
 	}
 	if (!n_option)
 		ft_putchar_fd('\n', STDOUT_FILENO);
+	env->lst_exit = 0;
 	return (true);
 }

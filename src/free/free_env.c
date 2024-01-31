@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:02:01 by edesaint          #+#    #+#             */
-/*   Updated: 2024/01/30 18:46:14 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/31 16:41:01 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,52 @@ void    free_env(t_env *env)
         free(env);
         env = NULL;
     }
+}
+
+void	free_node(t_node *node)
+{
+	if (!node)
+		return ;
+	free_tab_exec(node->tab_exec);
+	if (node->redir_in)
+		free(node->redir_in);
+	if (node->redir_out)
+		free(node->redir_out);
+	if (node->redir_append)
+		free(node->redir_append);
+	// if (node->redir_heredoc)
+	// 	free(node->redir_heredoc);
+	// if (node->redir_error)
+	//     free(node->redir_error);
+	free(node);
+}
+
+void	free_node_list(t_node *head)
+{
+	t_node	*current;
+	t_node	*next;
+
+	current = head;
+	while (current != NULL)
+	{
+		next = current->next;
+		free_node(current);
+		current = next;
+	}
+}
+
+void	free_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	if (tab)
+	{
+		while (tab[i])
+		{
+			free(tab[i]);
+			i++;
+		}
+		free(tab);
+	}
 }

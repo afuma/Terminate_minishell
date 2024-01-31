@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 20:21:48 by wnguyen           #+#    #+#             */
-/*   Updated: 2024/01/30 18:39:40 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/31 16:26:19 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	remove_env_link(t_env *env, t_env_link *link)
 				env->first = current->next;
 			free(link->name);
 			free(link->content);
-			// free(link);
+			free(link);
 			return ;
 		}
 		previous = current;
@@ -54,41 +54,77 @@ static void	remove_env_link(t_env *env, t_env_link *link)
 	}
 }
 
-void	unset_error(char *arg)
+// void	unset_error(char *arg)
+// {
+// 	ft_putstr_fd("minishell: unset: `", STDERR_FILENO);
+// 	ft_putstr_fd(arg, STDERR_FILENO);
+// 	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
+// }
+
+void	remove_env_var(t_env *env, char *name)
 {
-	ft_putstr_fd("minishell: unset: `", STDERR_FILENO);
-	ft_putstr_fd(arg, STDERR_FILENO);
-	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
+	t_env_link	*current;
+	t_env_link	*next;
+
+	current = env->first;
+	while (current)
+	{
+		next = current->next;
+		if (ft_strcmp(current->name, name) == 0)
+		{
+			remove_env_link(env, current);
+			env->len--;
+			break ;
+		}
+		current = next;
+	}
 }
 
 bool	ft_unset(t_node *node, t_env *env)
 {
-	t_env_link	*current;
-	t_env_link	*next;
-	char		**args;
-	int			i;
+	char	**args;
+	int		i;
 
 	args = node->tab_exec;
 	i = 1;
 	while (args[i])
 	{
-		if (!is_valid_env_name(args[i]))
-		{
-			unset_error(args[i]);
-			i++;
-		}
-		current = env->first;
-		while (current)
-		{
-			next = current->next;
-			if (ft_strcmp(current->name, args[i]) == 0)
-			{
-				remove_env_link(env, current);
-				env->len--;
-			}
-			current = next;
-		}
+		if (is_valid_env_name(args[i]))
+			remove_env_var(env, args[i]);
 		i++;
 	}
+	env->lst_exit = 0;
 	return (true);
 }
+
+// bool	ft_unset(t_node *node, t_env *env)
+// {
+// 	t_env_link	*current;
+// 	t_env_link	*next;
+// 	char		**args;
+// 	int			i;
+
+// 	args = node->tab_exec;
+// 	i = 1;
+// 	while (args[i])
+// 	{
+// 		if (!is_valid_env_name(args[i]))
+// 		{
+// 			unset_error(args[i]);
+// 			i++;
+// 		}
+// 		current = env->first;
+// 		while (current)
+// 		{
+// 			next = current->next;
+// 			if (ft_strcmp(current->name, args[i]) == 0)
+// 			{
+// 				remove_env_link(env, current);
+// 				env->len--;
+// 			}
+// 			current = next;
+// 		}
+// 		i++;
+// 	}
+// 	return (true);
+// }

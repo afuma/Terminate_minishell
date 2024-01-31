@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:23:51 by blax              #+#    #+#             */
-/*   Updated: 2024/01/31 15:58:55 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/31 19:11:55 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ bool ft_main(t_data *data, t_env *env)
 	free(data);
 	data = NULL;
 	execute_command_node(first_node, env);
-	free_nodes(first_node);
+	// free_nodes(first_node);
     return (true);
 }
 

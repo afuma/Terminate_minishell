@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 21:00:04 by wnguyen           #+#    #+#             */
-/*   Updated: 2024/01/30 18:38:43 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/31 01:10:47 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ static bool	process_export_arg(char *arg, t_env *env)
 {
 	char	*name;
 	char	*content;
+	bool	status;
 
+	status = true;
 	if (check_env_name(arg))
 	{
 		if (ft_strchr(arg, '='))
@@ -73,56 +75,29 @@ static bool	process_export_arg(char *arg, t_env *env)
 	else
 	{
 		export_error(arg);
-		return (false);
+		status = false;
 	}
-	return (false);
+	return (status);
 }
 
 bool	ft_export(t_node *node, t_env *env)
 {
-	int	i;
+	int		i;
+	bool	status;
 
 	i = 1;
+	status = true;
 	if (!node->tab_exec[1] || node->tab_exec[1][0] == '#')
-		return (print_env_var(env), 0);
-	while (node->tab_exec[i] && node->tab_exec[i][0] != '#')
+		print_env_var(env);
+	else
 	{
-		if (!process_export_arg(node->tab_exec[i], env))
-			return (false);
-		i++;
+		while (node->tab_exec[i] && node->tab_exec[i][0] != '#')
+		{
+			if (!process_export_arg(node->tab_exec[i], env))
+				status = false;
+			i++;
+		}
 	}
-	return (true);
+	env->lst_exit = status;
+	return (status);
 }
-
-// int	ft_export(t_node *node, t_env *env)
-// {
-// 	int		i;
-// 	char	*name;
-// 	char	*content;
-
-// 	i = 1;
-// 	if (!node->tab_exec[1] || node->tab_exec[1][0] == '#')
-// 		return (print_env_var(env), 0);
-// 	while (node->tab_exec[i] && node->tab_exec[i][0] != '#')
-// 	{
-// 		if (check_env_name(node->tab_exec[i]))
-// 		{
-// 			if (ft_strchr(node->tab_exec[i], '='))
-// 			{
-// 				name = ft_substr(node->tab_exec[i], 0,
-// 						ft_strchr(node->tab_exec[i], '=') - node->tab_exec[i]);
-// 				content = get_env_content(node->tab_exec[i]);
-// 				update_env_var(env, name, content);
-// 				free(name);
-// 				free(content);
-// 			}
-// 			else
-// 				add_env_var(env, node->tab_exec[i], "");
-// 		}
-// 		else
-// 			export_error(node->tab_exec[i]);
-// 		i++;
-// 	}
-// 	return (0);
-// }
-

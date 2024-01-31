@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 21:22:06 by wnguyen           #+#    #+#             */
-/*   Updated: 2024/01/30 18:23:45 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/31 01:04:43 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,26 +42,60 @@ static void	exit_with_error(char *arg)
 	exit(2);
 }
 
+// void	free_resources(t_env *env, t_data *data)
+// {
+// 	free_env(env);
+// free_all(data);
+// }
+
 bool	ft_exit(t_node *node, t_env *env)
 {
 	char	**args;
 	int		exit_status;
 
-	(void)env;
 	args = node->tab_exec;
 	exit_status = 0;
 	if (!args[1])
-		return (false);
+	{
+		// ft_putendl_fd("exit", STDOUT_FILENO);
+		env->lst_exit = 0;
+		return (true);
+	}
 	if (!is_valid_exit_num(args[1]))
 		exit_with_error(args[1]);
-	exit_status = ft_atoi(args[1]);
 	if (args[2])
 	{
 		ft_putendl_fd("minishell: exit: too many arguments", STDERR_FILENO);
+		env->lst_exit = 1;
 		return (false);
 	}
+	exit_status = ft_atoi(args[1]);
 	// ft_putendl_fd("exit", STDOUT_FILENO);
 	env->lst_exit = exit_status;
+	// exit(exit_status);
 	return (true);
-	// return (exit_status);
 }
+
+// bool	ft_exit(t_node *node, t_env *env)
+// {
+// 	char	**args;
+// 	int		exit_status;
+
+// 	(void)env;
+// 	args = node->tab_exec;
+// 	exit_status = 0;
+// 	if (!args[1])
+// 		return (false);
+// 	if (!is_valid_exit_num(args[1]))
+// 		exit_with_error(args[1]);
+// 	exit_status = ft_atoi(args[1]);
+// 	if (args[2])
+// 	{
+// 		ft_putendl_fd("minishell: exit: too many arguments", STDERR_FILENO);
+// 		return (false);
+// 	}
+// 	// ft_putendl_fd("exit", STDOUT_FILENO);
+// 	env->lst_exit = exit_status;
+// 	return (true);
+// 	// return (exit_status);
+// }

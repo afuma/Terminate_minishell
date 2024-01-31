@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 12:04:42 by edesaint          #+#    #+#             */
-/*   Updated: 2024/01/29 18:00:15 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/30 22:43:34 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_node *create_node(t_data *data)
     node->redir_in = NULL;
     node->redir_out = NULL;
     node->redir_append = NULL;
-    node->redir_heredoc = NULL;
     node->next = NULL;
     return (node);
 }

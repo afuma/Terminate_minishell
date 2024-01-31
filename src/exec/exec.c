@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 10:04:08 by blax              #+#    #+#             */
-/*   Updated: 2024/01/30 22:29:11 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/31 15:28:47 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,12 @@ bool	execute_command_node(t_node *node, t_env *env)
 	{
 		if (!exec_redir(node))
 		{
-			free_nodes(node);
-			exit (EXIT_SUCCESS);
+			// free_nodes(node);
+			return (false);
+			// implique d'importer data mais pourquoi pas
+			// free(data);
+			// data = NULL;
+			// exit (EXIT_SUCCESS);
 		}
 		if (node->tab_exec[0] && ft_strcmp(node->tab_exec[0], "exit") == 0)
 			ft_putendl_fd("exit", STDOUT_FILENO);

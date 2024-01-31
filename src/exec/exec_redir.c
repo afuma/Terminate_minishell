@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:15:34 by wnguyen           #+#    #+#             */
-/*   Updated: 2024/01/30 16:49:59 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/30 22:43:30 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,22 +63,6 @@ static bool	redir_out(int fd, const char *file, bool type_redir)
 // 	return (true);
 // }
 
-// static bool	redir_heredoc(t_node *node)
-// {
-// 	int	fd_heredoc;
-
-// 	fd_heredoc = open(node->redir_heredoc, O_RDONLY);
-// 	if (fd_heredoc < 0)
-// 		return (perror("open"), false);
-// 	if (dup2(fd_heredoc, STDIN_FILENO) < 0)
-// 	{
-// 		close(fd_heredoc);
-// 		return (perror("dup2"), false);
-// 	}
-// 	close(fd_heredoc);
-// 	return (true);
-// }
-
 bool exec_redir(t_node *node)
 {
 	if (!exec_redir_1(node))
@@ -132,6 +116,4 @@ bool	exec_redir_2(t_node *node)
 	// 		return (false);
 	// 	}
 	// }
-	// if (node->redir_heredoc && redir_heredoc(node))
-	// 	return (false);
 }

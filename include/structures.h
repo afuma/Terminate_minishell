@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:19:02 by blax              #+#    #+#             */
-/*   Updated: 2024/01/28 15:14:29 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/31 11:05:53 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ typedef struct s_node
     char			    *redir_in;
 	char				*redir_out;
 	char				*redir_append;
-	char				*redir_heredoc;
 	struct s_node       *next;
 } t_node;
 
@@ -74,8 +73,7 @@ typedef struct s_data
     int             nb_nodes;
     bool            is_space;
     char            type_quote;
-    char            in_quote;
-	int				lst_exit; //dernier statue de sortie
+    bool            in_quote;
     char            *str;
     struct s_token	*token;
 	struct s_node	*node;

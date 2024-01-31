@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 10:38:30 by edesaint          #+#    #+#             */
-/*   Updated: 2024/01/17 10:39:58 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/31 11:19:31 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ char *trim_str(char *str)
     int start;
     int end;
     
+    if (!str)
+        return (NULL);
     start = nb_trim_left(str);
     end = nb_trim_right(str);
     return (ft_substr(str, start, end));

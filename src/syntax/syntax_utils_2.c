@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 10:38:36 by edesaint          #+#    #+#             */
-/*   Updated: 2024/01/22 12:14:49 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/31 11:34:50 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ bool is_closed_quotes(t_data *data)
 {
     int i;
 
+    if (!data)
+        return (false);
     i = 0;
     while (data->str[i])
     {

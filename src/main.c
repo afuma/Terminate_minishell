@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:23:51 by blax              #+#    #+#             */
-/*   Updated: 2024/01/30 22:26:54 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/31 12:59:01 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,10 @@ int	main(int argc, char *argv[], char **env)
 	argv[0] = '\0';
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, handle_sigint);
+	data = malloc_data(data);
+	if (!data)
+		return (perror("malloc failed"), false);
+	init_data(data, NULL, NULL);
 	// init_env_null(my_env);
 	if (!env || !env[0])
 		my_env = init_mini_env();
@@ -86,6 +90,9 @@ int	main(int argc, char *argv[], char **env)
 	update_shlvl(my_env);
 	main_loop(data, my_env);
 	free_env(my_env);
+	free(data);
+	data = NULL;
+	// free_all(data);
 	return (0);
 }
 
@@ -101,14 +108,19 @@ bool main_loop(t_data *data, t_env *my_env)
 		if (command && *command)
 		{
 			add_history(command);
-			data = init_data(command, my_env);
+			init_data(data, command, my_env);
 			ft_main(data, my_env);
-			// printf("je free data encore !");
-			free_data(data);
+			free_nodes(data->node);
+			data->node = NULL;
+			// free_data(data);
 		}
-		free(command);
+		// init_data(data, NULL, my_env);
+		if (command)
+		{
+			free(command);
+			command = NULL;
+		}
 	}
 	rl_clear_history();
-	free_all(data);
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 11:31:59 by edesaint          #+#    #+#             */
-/*   Updated: 2024/01/26 12:51:13 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/30 22:43:38 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void print_redir(t_node *node)
     printf("redir_in: %s\n", node->redir_in);
     printf("redir_out: %s\n", node->redir_out);
     printf("redir_append: %s\n", node->redir_append);
-    printf("redir_heredoc: %s\n", node->redir_heredoc);
     printf("\n");
 }
 

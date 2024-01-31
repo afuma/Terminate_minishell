@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 18:26:34 by blax              #+#    #+#             */
-/*   Updated: 2024/01/28 12:45:22 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/31 11:23:29 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 	// else
 	// 	my_env = init_env(env);
     my_env = NULL;
-    data = init_data(argv[1], my_env);
+    data = malloc_data(argv[1], my_env);
     if (!is_closed_quotes(data))
         ft_error_2(data, "unclosed quotes");
     ft_lexer(data);

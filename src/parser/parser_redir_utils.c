@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 21:17:52 by edesaint          #+#    #+#             */
-/*   Updated: 2024/01/28 15:13:25 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/30 22:39:34 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ char *get_name_redir(t_token *token)
     if (!token->next)
         return (NULL);
     if (token->next && token->next->type_token == T_FILE)
-        return (token->next->str);
+        return (ft_strdup(token->next->str));
     return (NULL);
 }

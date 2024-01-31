@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:13:03 by wnguyen           #+#    #+#             */
-/*   Updated: 2024/01/30 20:05:45 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/31 16:58:16 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ bool	is_builtin(t_node *node)
 		return (false);
 }
 
-int	builtin_command(t_node *node, t_env *env, int pid)
+int	builtin_command(t_node *node, t_env *env)
 {
 	if (!node || !node->tab_exec || !node->tab_exec[0] || !node->type)
 		return (ft_putstr_fd("Invalid command\n", STDERR_FILENO), 1);
@@ -47,10 +47,8 @@ int	builtin_command(t_node *node, t_env *env, int pid)
 		return (ft_env(node, env));
 	else if (ft_strcmp(node->tab_exec[0], "exit") == 0)
 		return (ft_exit(node, env));
-	else
-		return (0);
-	if (pid == 0)
-		exit(EXIT_SUCCESS);
+	return (0);
+
 }
 
 bool	exec_builtin(t_node *node, t_env *env)
@@ -60,8 +58,12 @@ bool	exec_builtin(t_node *node, t_env *env)
 
 	exit_status = 0;
 	if (node->redir_out || node->redir_append)
+	{
 		cpy_stdout = dup(STDOUT_FILENO);
-	exit_status = builtin_command(node, env, 1);
+		if (cpy_stdout < 0)
+			return (perror("dup"), false);
+	}
+	exit_status = builtin_command(node, env);
 	if (node->redir_out || node->redir_append)
 	{
 		if (dup2(cpy_stdout, STDOUT_FILENO) < 0)

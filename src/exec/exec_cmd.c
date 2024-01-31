@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:57:41 by wnguyen           #+#    #+#             */
-/*   Updated: 2024/01/31 13:12:49 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/31 19:03:08 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,35 +33,91 @@ bool	execute_command(t_node *node, char **envp)
 		free(cmd_path);
 		return (false);
 	}
-	free(cmd_path);
 	return (true);
 }
 
-void    exec_child_process(t_node *node, int in_fd, t_env *env, int *pipe_fds)
+static bool	setup_child(t_node *node, int in_fd, int *pipe_fds)
 {
-    char    **envp;
-
-    envp = convert_env_to_tab(env);
-    if (!exec_redir(node))
-        (free_nodes(node), exit(EXIT_FAILURE));
-    if (in_fd != STDIN_FILENO)
-    {
-        if (dup2(in_fd, STDIN_FILENO) == -1)
-        {
-            perror("dup2 error");
-            exit(EXIT_FAILURE);
-        }
-        close(in_fd);
-    }
-    if (node->next)
-    {
-        close(pipe_fds[0]);
-        if (dup2(pipe_fds[1], STDOUT_FILENO) == -1)
-            (perror("dup2 error"), exit(EXIT_FAILURE));
-        close(pipe_fds[1]);
-    }
-    if (is_builtin(node))
-        exit(exec_builtin(node, env));
-    execute_command(node, envp);
-    exit(EXIT_SUCCESS);
+	if (!exec_redir(node))
+		return (false);
+	if (in_fd != STDIN_FILENO)
+	{
+		if (dup2(in_fd, STDIN_FILENO) == -1)
+		{
+			perror("dup2 error");
+			return (false);
+		}
+		if (in_fd != -1)
+			close(in_fd);
+	}
+	if (node->next)
+	{
+		if (pipe_fds[0] != -1)
+			close(pipe_fds[0]);
+		if (dup2(pipe_fds[1], STDOUT_FILENO) == -1)
+		{
+			perror("dup2 error");
+			return (false);
+		}
+		if (pipe_fds[1] != -1)
+			close(pipe_fds[1]);
+	}
+	return (true);
 }
+
+void	exec_child_process(t_node *node, int in_fd, t_env *env, int *pipe_fds)
+{
+	char	**envp;
+	int		exit_status;
+
+	envp = convert_env_to_tab(env);
+	exit_status = EXIT_FAILURE;
+	if (setup_child(node, in_fd, pipe_fds))
+	{
+		if (is_builtin(node))
+		{
+			exec_builtin(node, env);
+			exit_status = EXIT_SUCCESS;
+		}
+		else if (execute_command(node, envp))
+		{
+			exit_status = EXIT_SUCCESS;
+		}
+	}
+	free_tab(envp);
+	free_nodes(node);
+	node = NULL;
+	free_env(env);
+	exit(exit_status);
+}
+
+// void	exec_child_process(t_node *node, int in_fd, t_env *env, int *pipe_fds)
+// {
+// 	char	**envp;
+
+// 	envp = convert_env_to_tab(env);
+// 	if (exec_redir(node) == false)
+// 		(free_tab(envp), exit(EXIT_FAILURE));
+// 	if (in_fd != STDIN_FILENO)
+// 	{
+// 		if (dup2(in_fd, STDIN_FILENO) == -1)
+// 		{
+// 			perror("dup2 error");
+// 			exit(EXIT_FAILURE);
+// 		}
+// 		close(in_fd);
+// 	}
+// 	if (node->next)
+// 	{
+// 		close(pipe_fds[0]);
+// 		if (dup2(pipe_fds[1], STDOUT_FILENO) == -1)
+// 			(perror("dup2 error"), exit(EXIT_FAILURE));
+// 		close(pipe_fds[1]);
+// 	}
+// 	if (is_builtin(node))
+// 		(free_tab(envp), exec_builtin(node, env), free_node(node),
+// 			free_env(env), free_tab(envp), exit(EXIT_SUCCESS));
+// 	execute_command(node, envp);
+// 	free_tab(envp);
+// 	exit(EXIT_FAILURE);
+// }

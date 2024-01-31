@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 08:31:10 by blax              #+#    #+#             */
-/*   Updated: 2024/01/31 18:00:26 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/31 19:11:12 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ void	ft_node_delone(t_node *node);
 
 // free_env.c
 void    free_env(t_env *env);
+void	free_node(t_node *node);
+void	free_tab(char **tab);
 
 // free_2.c
 void free_all(t_data *data);
@@ -300,7 +302,7 @@ bool is_redir_out(char *name, int type_redir);
 
 // exec_builtin.c
 bool			is_builtin(t_node *node);
-int				builtin_command(t_node *node, t_env *env, int pid);
+int				builtin_command(t_node *node, t_env *env);
 bool				exec_builtin(t_node *node, t_env *env);
 
 // exec_cmd.c

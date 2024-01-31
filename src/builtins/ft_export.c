@@ -6,7 +6,7 @@
 /*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 21:00:04 by wnguyen           #+#    #+#             */
-/*   Updated: 2024/01/31 01:10:47 by wnguyen          ###   ########.fr       */
+/*   Updated: 2024/01/31 23:33:54 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,11 @@ int	check_env_name(const char *str)
 	i++;
 	while (str[i])
 	{
-		if (!ft_isalnum(str[i]) && str[i] != '_' && str[i] != '=')
+		if (!ft_isalnum(str[i]) && str[i] != '_' && str[i] != '='
+			&& str[i] != ':' && str[i] != '/')
+		{
 			return (0);
+		}
 		i++;
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:23:51 by blax              #+#    #+#             */
-/*   Updated: 2024/01/31 19:11:55 by wnguyen          ###   ########.fr       */
+/*   Updated: 2024/01/31 22:18:02 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 #include <signal.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-
-int				g_info;
 
 // il faut afficher un message de sortie: "exit" quand on clique sur ctrl+D
 // void	handle_signal(int signo)
@@ -33,23 +31,25 @@ int				g_info;
 // 	}
 // }
 
+volatile sig_atomic_t	signal_received = 0;
+
 bool ft_main(t_data *data, t_env *env)
 {
 	t_node *first_node;
 	
-    if (!is_closed_quotes(data))
-    	return (free_all(data), perror("unclosed quotes"), false);		// ft_error_2(data, "unclosed_quotes");
-    ft_lexer(data);
-    if (!data->token)
+	if (!is_closed_quotes(data))
+		return (free_all(data), perror("unclosed quotes"), false);		// ft_error_2(data, "unclosed_quotes");
+	ft_lexer(data);
+	if (!data->token)
 		return (free_all(data), false);
-    determine_token_types(data);
-    if (!verif_syntax(data->token))
-        return (free_all(data), perror("syntax_erreur"), false);
-    if (!pass_on_filters(data))
+	determine_token_types(data);
+	if (!verif_syntax(data->token))
+		return (free_all(data), perror("syntax_erreur"), false);
+	if (!pass_on_filters(data))
 		return (free_all(data), perror("filter_erreur"), false);
-    parser(data);
-    // print_tokens(data->token);
-    // print_nodes(data);
+	parser(data);
+	// print_tokens(data->token);
+	// print_nodes(data);
 	free_tokens(data->token);
 	data->token = NULL;
 	free(data->str);
@@ -60,7 +60,7 @@ bool ft_main(t_data *data, t_env *env)
 	data = NULL;
 	execute_command_node(first_node, env);
 	// free_nodes(first_node);
-    return (true);
+	return (true);
 }
 
 int	main(int argc, char *argv[], char **env)
@@ -92,9 +92,14 @@ bool main_loop(t_env *my_env)
 	data = NULL;
 	while (1)
 	{
+		if (signal_received)
+		{
+			signal_received = 0;
+			continue ;
+		}
 		command = readline("minishell> ");
 		if (handle_ctrl_d(command))
-			break;
+			break ;
 		if (command && *command)
 		{
 			add_history(command);

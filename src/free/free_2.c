@@ -6,7 +6,7 @@
 /*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 22:31:24 by edesaint          #+#    #+#             */
-/*   Updated: 2024/01/31 18:37:03 by wnguyen          ###   ########.fr       */
+/*   Updated: 2024/01/31 22:43:25 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,14 +144,14 @@ void free_data(t_data *data)
 {
     if (!data)
         return ;
-    // if (data->str)
-    // {
-    //     // free(data->str);
-    //     // data->str = NULL;
-    //     // data->env = NULL; // il n'y a qu'un seul env dans minishell 
-    //         // (le mettre a null empechera la structure data de le free je suppose donc a tester)
-    //         // comme ca on enleve la reference vers la zone memoire sans la detruire
-    // }
-    // free(data);
-    // data = NULL;
+    if (data->str)
+    {
+        free(data->str);
+        data->str = NULL;
+        // data->env = NULL; // il n'y a qu'un seul env dans minishell 
+            // (le mettre a null empechera la structure data de le free je suppose donc a tester)
+            // comme ca on enleve la reference vers la zone memoire sans la detruire
+    }
+    free(data);
+    data = NULL;
 }

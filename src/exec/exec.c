@@ -6,7 +6,7 @@
 /*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 10:04:08 by blax              #+#    #+#             */
-/*   Updated: 2024/01/31 21:14:47 by wnguyen          ###   ########.fr       */
+/*   Updated: 2024/01/31 23:56:19 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ static bool	execute_single_child(t_node *node, t_env *env)
 	envp = convert_env_to_tab(env);
 	if (!execute_command(node, envp))
 	{
-		free(envp);
+		free_tab(envp);
 		free_node(node);
 		free_env(env);
 		exit(EXIT_FAILURE);
 	}
-	free(envp);
+	free_tab(envp);
 	free_node(node);
 	free_env(env);
 	exit(EXIT_SUCCESS);
@@ -55,10 +55,14 @@ bool	execute_single_cmd(t_node *node, t_env *env)
 static void	execute_exit_command(t_node *node, t_env *env)
 {
 	ft_putendl_fd("exit", STDOUT_FILENO);
-	ft_exit(node, env);
-	free_node(node);
-	free_env(env);
-	exit(EXIT_SUCCESS);
+	if (ft_exit(node, env))
+	{
+		free_node(node);
+		free_env(env);
+		exit(EXIT_SUCCESS);
+	}
+	else
+		free_node(node);
 }
 
 void	execute_command_node(t_node *node, t_env *env)
@@ -71,11 +75,14 @@ void	execute_command_node(t_node *node, t_env *env)
 	if (node->id == 0 && node->next == NULL && is_builtin(node))
 	{
 		if (!exec_redir(node))
-			return ;
+			return (free_nodes(node));
 		if (node->tab_exec[0] && ft_strcmp(node->tab_exec[0], "exit") == 0)
 			execute_exit_command(node, env);
-		if (exec_builtin(node, env))
+		else
+		{
+			exec_builtin(node, env);
 			free_node(node);
+		}
 		if (dup2(stdout_backup, STDOUT_FILENO) < 0)
 			(close(stdout_backup), exit(1));
 		close(stdout_backup);

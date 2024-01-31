@@ -6,7 +6,7 @@
 /*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 08:31:10 by blax              #+#    #+#             */
-/*   Updated: 2024/01/31 19:51:36 by wnguyen          ###   ########.fr       */
+/*   Updated: 2024/01/31 22:01:25 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 // # include <bsd/string.h>
 // # include <stddef.h> //ft_strcmp
 
-extern int g_info;
+extern volatile sig_atomic_t	signal_received;
 
 // ------------------------- MAIN ---------------------------------
 

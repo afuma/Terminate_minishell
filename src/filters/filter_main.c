@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 21:57:05 by edesaint          #+#    #+#             */
-/*   Updated: 2024/01/31 17:33:51 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/31 19:27:08 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ bool pass_on_filters(t_data *data)
         return (false);
     if (!process_tokens(data, &filter_affectation))
         return (false);
-    printf("token->str avant expand: %s\n", data->token->str);
     ft_token_iter_expander(data, &expand_string);
-    printf("token->str apres expand: %s\n", data->token->str);
     return (true);
 }

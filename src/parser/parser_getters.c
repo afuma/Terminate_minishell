@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 11:22:11 by edesaint          #+#    #+#             */
-/*   Updated: 2024/01/31 16:28:08 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/31 19:25:34 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,7 @@ char *get_argument(t_data *data, t_token *token)
     while (token && token->id <= data->end)
     {
         if (token->type_token == T_ARGUMENT)
-        {
-            printf("zone memoire liberer (null): %s\n", token->str);
             return (ft_strdup(token->str));
-        }
         token = token->next;
     }
     return (NULL);

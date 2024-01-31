@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:02:01 by edesaint          #+#    #+#             */
-/*   Updated: 2024/01/31 16:41:01 by wnguyen          ###   ########.fr       */
+/*   Updated: 2024/01/31 19:26:57 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void    free_env(t_env *env)
             current = current->next;
             free_env_link(tmp);
         }
-        printf("env->first = %p", env->first);
         free(env);
         env = NULL;
     }

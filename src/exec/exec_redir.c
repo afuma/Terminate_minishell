@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 16:15:34 by wnguyen           #+#    #+#             */
-/*   Updated: 2024/01/30 16:49:59 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/31 20:44:44 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static bool	redir_out(int fd, const char *file, bool type_redir)
 // 	return (true);
 // }
 
-bool exec_redir(t_node *node)
+bool	exec_redir(t_node *node)
 {
 	if (!exec_redir_1(node))
 		return (false);
@@ -101,9 +101,9 @@ bool	exec_redir_1(t_node *node)
 	}
 	if (node->redir_out)
 	{
-		if (is_empty_file(node->redir_out) ||
-			!is_redir_out(node->redir_out, 0) || \
-			!redir_out(STDOUT_FILENO, node->redir_out, 0))
+		if (is_empty_file(node->redir_out)
+			|| !is_redir_out(node->redir_out, 0)
+			|| !redir_out(STDOUT_FILENO, node->redir_out, 0))
 		{
 			return (false);
 		}
@@ -123,15 +123,4 @@ bool	exec_redir_2(t_node *node)
 		}
 	}
 	return (true);
-	// if (node->redir_err)
-	// {
-	// 	if (is_empty_file(node->redir_append) || 
-			// !is_redir_out(node->redir_out, 0) || 
-	// 		!redir_out(STDERR_FILENO, node->redir_err, 0))
-	// 	{
-	// 		return (false);
-	// 	}
-	// }
-	// if (node->redir_heredoc && redir_heredoc(node))
-	// 	return (false);
 }

@@ -6,13 +6,13 @@
 /*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 10:04:08 by blax              #+#    #+#             */
-/*   Updated: 2024/01/31 20:50:54 by wnguyen          ###   ########.fr       */
+/*   Updated: 2024/01/31 21:14:47 by wnguyen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static bool	execute_single_childd(t_node *node, t_env *env)
+static bool	execute_single_child(t_node *node, t_env *env)
 {
 	char	**envp;
 
@@ -41,9 +41,10 @@ bool	execute_single_cmd(t_node *node, t_env *env)
 	if (pid == -1)
 		(perror("fork"), exit(EXIT_FAILURE));
 	if (pid == 0)
-		execute_single_childd(node, env);
+		execute_single_child(node, env);
 	else
 	{
+		free_node(node);
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
 			env->lst_exit = WEXITSTATUS(status);
@@ -56,6 +57,7 @@ static void	execute_exit_command(t_node *node, t_env *env)
 	ft_putendl_fd("exit", STDOUT_FILENO);
 	ft_exit(node, env);
 	free_node(node);
+	free_env(env);
 	exit(EXIT_SUCCESS);
 }
 

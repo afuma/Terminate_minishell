@@ -6,13 +6,11 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 23:04:42 by blax              #+#    #+#             */
-/*   Updated: 2024/01/28 18:49:34 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/31 18:06:58 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-int g_last_exit_status = 0;
 
 bool is_expandable(t_token *token)
 {
@@ -21,15 +19,19 @@ bool is_expandable(t_token *token)
     return (token->type_str == D_QUOTE || token->type_str == S_CHAR);
 }
 
-void expand_string(t_env *env, char *str)
+char *expand_string(t_env *env, char *str)
 {
     char *str_expand;
 
     if (!ft_strchr_bool(str, '$'))
-        return ;
+        return (str);
     str_expand = expand_variables(env, str);
     if (str_expand)
+    {
         replace_string(&str, str_expand);
+        free(str_expand);
+    }
+    return (str);
 }
 
 void replace_string(char **original, const char *new_string)

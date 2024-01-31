@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wnguyen <wnguyen@student.42.fr>            +#+  +:+       +#+        */
+/*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 13:49:07 by wnguyen           #+#    #+#             */
-/*   Updated: 2024/01/27 19:21:57 by wnguyen          ###   ########.fr       */
+/*   Updated: 2024/01/31 18:08:28 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*get_env_name(t_env *env, const char *name)
 	current = env->first;
 	while (current)
 	{
-		if (strcmp(current->name, name) == 0)
+		if (ft_strcmp(current->name, name) == 0)
 			return (current->content);
 		current = current->next;
 	}

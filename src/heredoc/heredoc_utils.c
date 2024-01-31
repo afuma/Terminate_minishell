@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 20:07:13 by edesaint          #+#    #+#             */
-/*   Updated: 2024/01/29 19:47:36 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/31 18:01:16 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	get_and_save_heredoc_content(t_env *env, int fd, char *delimiter)
 	line = readline("> ");
     while (line != NULL && ft_strcmp(line, delimiter) != 0 && errno != EINTR)
 	{
-        expand_string(env, line);
+        line = expand_string(env, line);
 		write(fd, line, ft_strlen(line));
         free(line);
         line = readline("> ");

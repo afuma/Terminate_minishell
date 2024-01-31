@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 08:31:10 by blax              #+#    #+#             */
-/*   Updated: 2024/01/31 15:50:49 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/31 18:00:26 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ t_data	*malloc_and_init_data(char *str, t_env *env);
 void	ft_token_add_back(t_token **token, t_token *newlist);
 t_token	*ft_token_last(t_token *token);
 void	ft_token_iter(t_data *data, bool (*f)(t_token *));
-void	ft_token_iter_expander(t_data *data, void (*f)(t_env *, char *));
+void	ft_token_iter_expander(t_data *data, char *(*f)(t_env *, char *));
 bool process_tokens(t_data *data, bool (*f)(char *str));
 
 // transform_enum.c
@@ -226,7 +226,7 @@ void determine_next_token_type(t_state type_token, t_state *cur_state);
 
 // expander.c
 bool is_expandable(t_token *token);
-void expand_string(t_env *env, char *str);
+char *expand_string(t_env *env, char *str);
 void replace_string(char **original, const char *new_string);
 
 // expander_utils_1.c

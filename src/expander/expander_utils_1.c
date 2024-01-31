@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 09:25:56 by blax              #+#    #+#             */
-/*   Updated: 2024/01/25 17:54:18 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/31 16:44:52 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,10 @@ bool is_valid_varname_expand(char c)
     return (ft_isalpha(c) || c == '?');
 }
 
-// la decouper pour la rendre plus modulable
-char* expand_variables(t_env *env, char *token_str)
+char* expand_variables(t_env *env, char *str)
 {
-    char *str;
     char *result;
 
-    str = token_str;
     result = ft_strdup("");
     while (*str)
     {
@@ -44,28 +41,31 @@ char* expand_variables(t_env *env, char *token_str)
 char* process_dollar_sign(t_env *env, char **str, char *result)
 {
     char *temp;
-    char *varName;
+    char *var_name;
 
-    (*str)++; // Passer le symbole '$'
-    varName = extract_var_name(str);
-    temp = append_variable_value(env, result, varName);
+    (*str)++;
+    var_name = extract_var_name(str);
+    temp = append_variable_value(env, result, var_name);
     free(result);
-    free(varName);
+    result = NULL;
+    free(var_name);
+    var_name = NULL;
 
     return (temp);
 }
 
 char* process_text_until_next_dollar(char **str, char *result)
 {
-    char *nextDollar;
+    char *next_dollar;
     char *temp;
 
-    nextDollar = ft_strchr(*(str + 1), '$');
-    if (!nextDollar)
-        nextDollar = *str + ft_strlen(*str); // Si pas de '$', aller à la fin
-    temp = copy_until_char(result, *str, *nextDollar);
+    next_dollar = ft_strchr(*(str + 1), '$');
+    if (!next_dollar)
+        next_dollar = *str + ft_strlen(*str);
+    temp = copy_until_char(result, *str, *next_dollar);
     free(result);
-    *str = nextDollar;
+    result = NULL;
+    *str = next_dollar;
 
     return (temp);
 }

@@ -6,7 +6,7 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 11:23:27 by edesaint          #+#    #+#             */
-/*   Updated: 2024/01/28 12:44:20 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/31 17:59:53 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_token_iter(t_data *data, bool (*f)(t_token *))
 	}
 }
 
-void	ft_token_iter_expander(t_data *data, void (*f)(t_env *, char *))
+void	ft_token_iter_expander(t_data *data, char *(*f)(t_env *, char *))
 {
 	t_token *token;
 	t_env *tmp_env;
@@ -58,7 +58,7 @@ void	ft_token_iter_expander(t_data *data, void (*f)(t_env *, char *))
 	while (token)
 	{
 		if (is_expandable(token))
-			f(tmp_env, token->str);
+			token->str = f(tmp_env, token->str);
 		token = token->next;
 	}
 }

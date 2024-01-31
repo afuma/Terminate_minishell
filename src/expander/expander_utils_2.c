@@ -6,20 +6,19 @@
 /*   By: edesaint <edesaint@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 09:27:15 by blax              #+#    #+#             */
-/*   Updated: 2024/01/24 21:12:12 by edesaint         ###   ########.fr       */
+/*   Updated: 2024/01/31 18:40:55 by edesaint         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// Fonction pour copier la chaîne jusqu'au caractère délimitateur
 char* copy_until_char(char *dest, char *src, char delimiter)
 {
     size_t len_new_result;
     size_t len;
     size_t n;
     char *ptr;
-    char *newResult;
+    char *new_result;
 
     len = ft_strlen(dest);
     n = 0;
@@ -30,51 +29,40 @@ char* copy_until_char(char *dest, char *src, char delimiter)
         ptr++;
     }
     len_new_result = len + n + 1;
-    newResult = malloc(sizeof(char) * len_new_result);
-    ft_strlcpy(newResult, dest, len_new_result);
-    ft_strlcat(newResult, src, len_new_result);
+    new_result = malloc(sizeof(char) * len_new_result);
+    ft_strlcpy(new_result, dest, len_new_result);
+    ft_strlcat(new_result, src, len_new_result);
 
-    return (newResult);
+    return (new_result);
 }
 
-// Fonction pour extraire le nom de la variable
 char* extract_var_name(char **str)
 {
     const char *start;
 
     start = *str;
-    // while (!is_syntax(**str) && !is_special_chars())
     while (ft_isalnum(**str) || **str == '_')
         (*str)++;
     return (ft_strndup(start, *str - start));
 }
 
-// Fonction pour ajouter la valeur de la variable au résultat
-char* append_variable_value(t_env *env, char *result, char *varName)
+char* append_variable_value(t_env *env, char *result, char *var_name)
 {
-    char *varValue;
-    size_t newLength;
-    char *newResult;
+    char *var_value;
+    size_t new_length;
+    char *new_result;
 
-    env->lst_exit = 0;
-    env->lst_exit++;
-    // Gestion spéciale pour le cas "$?"
-    if (ft_strcmp(varName, "?") == 0)
-    {
-        // varValue = ft_itoa(g_info); // Vous devez définir cette fonction
-        varValue = ft_itoa(env->lst_exit);
-    }
+    if (ft_strcmp(var_name, "?") == 0)
+        var_value = ft_itoa(env->lst_exit);
     else
+        var_value = get_env_name(env, var_name);
+    if (var_value)
     {
-        varValue = getenv(varName); // normalement definie depuis notre environnement
-    }
-    if (varValue)
-    {
-        newLength = ft_strlen(result) + ft_strlen(varValue) + 1;
-        newResult = malloc(sizeof(char) * newLength);
-        ft_strlcpy(newResult, result, newLength);
-        ft_strlcat(newResult, varValue, newLength);
-        return (newResult);
+        new_length = ft_strlen(result) + ft_strlen(var_value) + 1;
+        new_result = malloc(sizeof(char) * new_length);
+        ft_strlcpy(new_result, result, new_length);
+        ft_strlcat(new_result, var_value, new_length);
+        return (new_result);
     }
 
     return (ft_strdup(result));
